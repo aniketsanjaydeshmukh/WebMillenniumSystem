@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="base.definition"
+		template="/WEB-INF/jsp/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="" />
+	</definition>
+
+	<!-- <definition name="contact" extends="base.definition">
+		<put-attribute name="title" value="Web Millennium" />
+		<put-attribute name="body" value="/WEB-INF/jsp/contact.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/footer.jsp" />
+	</definition> -->
+
+	
+    <definition name="admin" template="/WEB-INF/jsp/login.jsp">  
+         
+    </definition>
+    
+    
+    <definition name="admin.definition"  
+        template="/WEB-INF/layout/admin_layout.jsp">  
+        <put-attribute name="title" value="EmployeeMangement" />  
+        <put-attribute name="header" value="/WEB-INF/layout/admin_header.jsp" />  
+        <put-attribute name="logo" value="/WEB-INF/layout/logo.jsp" />
+        <put-attribute name="menu" value="" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />  
+    </definition>  
+    
+    <definition name="dashboard"  extends="admin.definition">  
+        <put-attribute name="title" value="Admin" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/admin_home.jsp" />    
+  </definition>
+  
+  <definition name="operatorsList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/operatorsList.jsp"></put-attribute>  
+  </definition>  
+  
+  <definition name="establishmentList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/establishmentList.jsp"></put-attribute>  
+  </definition>  
+    
+    <definition name="machineList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/machineList.jsp"></put-attribute>  
+  </definition>  
+</tiles-definitions>

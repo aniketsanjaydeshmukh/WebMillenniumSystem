@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="ContactDao" class="com.spanish.english.dao.ContactDaoImpl" ></bean>
+	<bean id="ContactServices" class="com.spanish.english.services.ContactServicesImpl" ></bean> 
+	
+	<bean id="OperatorDao" class="com.spanish.english.dao.OperatorDaoImpl" ></bean>
+	<bean id="OperatorServices" class="com.spanish.english.services.OperatorServicesImpl" ></bean> 
+	
+	<bean id="EstablishmentDao" class="com.spanish.english.dao.EstablishmentDaoImpl" ></bean>
+	<bean id="EstablishmentServices" class="com.spanish.english.services.EstablishmentServicesImpl" ></bean> 
+   	
+   	<bean id="MachineDao" class="com.spanish.english.dao.MachineDaoImpl" ></bean>
+	<bean id="MachinetServices" class="com.spanish.english.services.MachineServicesImpl" ></bean> 
+	
+	 <bean id="AdminDao" class="com.spanish.english.dao.AdminDaoImpl" ></bean>
+	<bean id="AdminServices" class="com.spanish.english.services.AdminServicesImpl" ></bean>
+	
+	<bean id="customAuthenticationProvider" class="com.spanish.english.authentication.provider.CustomAuthenticationProvider" ></bean>
+	
+	
+	
+	
+   
+</beans>
