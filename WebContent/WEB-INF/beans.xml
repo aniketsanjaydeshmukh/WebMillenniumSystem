@@ -14,15 +14,56 @@
 	<bean id="EstablishmentServices" class="com.spanish.english.services.EstablishmentServicesImpl" ></bean> 
    	
    	<bean id="MachineDao" class="com.spanish.english.dao.MachineDaoImpl" ></bean>
-	<bean id="MachinetServices" class="com.spanish.english.services.MachineServicesImpl" ></bean> 
+	<bean id="MachineServices" class="com.spanish.english.services.MachineServicesImpl" ></bean> 
 	
 	 <bean id="AdminDao" class="com.spanish.english.dao.AdminDaoImpl" ></bean>
 	<bean id="AdminServices" class="com.spanish.english.services.AdminServicesImpl" ></bean>
 	
+	<bean id="TechnicianDao" class="com.spanish.english.dao.TechnicianDaoImpl" ></bean>
+	<bean id="TechnicianServices" class="com.spanish.english.services.TechnicianServicesImpl" ></bean>
+	
+	<bean id="CountryDao" class="com.spanish.english.dao.CountryDaoImpl" ></bean>
+	<bean id="CountryServices" class="com.spanish.english.services.CountryServicesImpl" ></bean>
+	
+	<bean id="MachineTypeDao" class="com.spanish.english.dao.MachineTypeDaoImpl" ></bean>
+	<bean id="MachineTypeServices" class="com.spanish.english.services.MachineTypeServicesImpl" ></bean> 
+	
+	<bean id="HopperTypeDao" class="com.spanish.english.dao.HopperTypeDaoImpl" ></bean>
+	<bean id="HopperTypeServices" class="com.spanish.english.services.HopperTypeServicesImpl" ></bean> 
+	
+	<bean id="CoinValidatorTypeDao" class="com.spanish.english.dao.CoinValidatorTypeDaoImpl" ></bean>
+	<bean id="CoinValidatorTypeServices" class="com.spanish.english.services.CoinValidatorTypeServicesImpl" ></bean> 
+	
+	<bean id="BillValidatorTypeDao" class="com.spanish.english.dao.BillValidatorTypeDaoImpl" ></bean>
+	<bean id="BillValidatorTypeServices" class="com.spanish.english.services.BillValidatorTypeServicesImpl" ></bean> 
+	
+	<bean id="CoinsTypeDao" class="com.spanish.english.dao.CoinsTypeDaoImpl" ></bean>
+	<bean id="CoinsTypeServices" class="com.spanish.english.services.CoinsTypeServicesImpl" ></bean> 
+	
+	<bean id="CoinsValueDao" class="com.spanish.english.dao.CoinsValueDaoImpl" ></bean>
+	<bean id="CoinsValueServices" class="com.spanish.english.services.CoinsValueServicesImpl" ></bean>
+	
+	<bean id="CountryCoinsValueDao" class="com.spanish.english.dao.CountryCoinsValueDaoImpl" ></bean>
+	<bean id="CountryCoinsValueServices" class="com.spanish.english.services.CountryCoinsValueServicesImpl" ></bean>
+	
+	<bean id="TokensTypeDao" class="com.spanish.english.dao.TokensTypeDaoImpl" ></bean>
+	<bean id="TokensTypeServices" class="com.spanish.english.services.TokensTypeServicesImpl" ></bean> 
+	
+	<bean id="TokensValueDao" class="com.spanish.english.dao.TokensValueDaoImpl" ></bean>
+	<bean id="TokensValueServices" class="com.spanish.english.services.TokensValueServicesImpl" ></bean>
+	
+	<bean id="CountryTokensValueDao" class="com.spanish.english.dao.CountryTokensValueDaoImpl" ></bean>
+	<bean id="CountryTokensValueServices" class="com.spanish.english.services.CountryTokensValueServicesImpl" ></bean>
+	
+	<bean id="BillsTypeDao" class="com.spanish.english.dao.BillsTypeDaoImpl" ></bean>
+	<bean id="BillsTypeServices" class="com.spanish.english.services.BillsTypeServicesImpl" ></bean> 
+	
+	<bean id="BillsValueDao" class="com.spanish.english.dao.BillsValueDaoImpl" ></bean>
+	<bean id="BillsValueServices" class="com.spanish.english.services.BillsValueServicesImpl" ></bean>
+	
+	<bean id="CountryBillsValueDao" class="com.spanish.english.dao.CountryBillsValueDaoImpl" ></bean>
+	<bean id="CountryBillsValueServices" class="com.spanish.english.services.CountryBillsValueServicesImpl" ></bean>
+	
 	<bean id="customAuthenticationProvider" class="com.spanish.english.authentication.provider.CustomAuthenticationProvider" ></bean>
 	
-	
-	
-	
-   
 </beans>

@@ -9,4 +9,5 @@ public interface EstablishmentServices {
 	Set<Establishment> getEstablishmentList();
 	Establishment getEstablishmentById(long id);
 	boolean deleteEstablishment(long Id);
+	Establishment getEstablishmentByUsername(String username);
 }

@@ -94,4 +94,68 @@ public class MachineDaoImpl implements MachineDao{
 		return flag;
 	}
 
+	@Override
+	public Set<Machine> getMachineListByStatus(String status) {
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		
+		Criteria c = session.createCriteria(Machine.class);
+		c.add(Restrictions.eq("machineStatus",status));
+		
+		List<Machine> list =  c.list();
+		Set<Machine> machineList = new HashSet<Machine>(list);
+
+		tx.commit();
+		session.close();
+		return machineList;
+	}
+
+	@Override
+	public Set<Machine> getMachineListByOperatorId(long id) {
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		
+		Criteria c = session.createCriteria(Machine.class);
+		c.createAlias("operator", "o");
+		c.add(Restrictions.eq("o.id", id));
+		
+		List<Machine> list = c.list();
+		Set<Machine> machineList = new HashSet<Machine>(list);
+		tx.commit();
+		session.close();
+		return machineList;
+	}
+
+	@Override
+	public boolean machineUpdate(Machine mahine) {
+		boolean flag = false;
+	    try{    
+	    	session = sessionFactory.openSession();
+			tx = session.beginTransaction();
+			session.merge(mahine);
+			tx.commit();
+			session.close();
+			flag = true;
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
+		return flag;
+	}
+
+	@Override
+	public Set<Machine> getMachineListByEstablishmentId(long id) {
+		session = sessionFactory.openSession();
+		tx = session.beginTransaction();
+		
+		Criteria c = session.createCriteria(Machine.class);
+		c.createAlias("establishment", "e");
+		c.add(Restrictions.eq("e.id", id));
+		
+		List<Machine> list = c.list();
+		Set<Machine> machineList = new HashSet<Machine>(list);
+		tx.commit();
+		session.close();
+		return machineList;
+	}
+
 }

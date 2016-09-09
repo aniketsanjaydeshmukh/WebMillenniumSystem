@@ -1,21 +1,26 @@
 package com.spanish.english.form;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "Operator")
 @Proxy(lazy=false)
-public class Operator implements Serializable{
+public class Operator implements Serializable, UserDetails{
 
 	/**
 	 * 
@@ -35,13 +40,26 @@ public class Operator implements Serializable{
 	private String identity_card;
 	private String email;
 	private String telephone;
-	private String username;
-	private String password;
+	private String operatorUsername;
+	private String operatorPassword;
 	private String address;
+	private String operatorRole;
 	
 	@ManyToOne(cascade=CascadeType.ALL)  
 	private Admin admin;
 	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=Machine.class,cascade=CascadeType.ALL, mappedBy="operator")  
+	private Set<Machine> machine;
+	
+	/* Spring Security related fields*/
+	@OneToMany(targetEntity=Role.class,cascade=CascadeType.ALL, mappedBy="operator")  
+    private List<Role> authorities;
+	
+	 private boolean accountNonExpired = true;
+	    private boolean accountNonLocked = true;
+	    private boolean credentialsNonExpired = true;
+	    private boolean enabled = true;
+	    
 	public long getId() {
 		return id;
 	}
@@ -96,17 +114,17 @@ public class Operator implements Serializable{
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	public String getUsername() {
-		return username;
+	public String getOperatorUsername() {
+		return operatorUsername;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setOperatorUsername(String username) {
+		this.operatorUsername = username;
 	}
-	public String getPassword() {
-		return password;
+	public String getOperatorPassword() {
+		return operatorPassword;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setOperatorPassword(String password) {
+		this.operatorPassword = password;
 	}
 	public String getAddress() {
 		return address;
@@ -121,7 +139,58 @@ public class Operator implements Serializable{
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
 	}
+	public Set<Machine> getMachine() {
+		return machine;
+	}
+	public void setMachine(Set<Machine> machine) {
+		this.machine = machine;
+	}
+	public List<Role> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities(List<Role> authorities) {
+		this.authorities = authorities;
+	}
 	
-	
+	 public boolean isAccountNonExpired() {
+	        return accountNonExpired;
+	    }
+	    public void setAccountNonExpired(boolean accountNonExpired) {
+	        this.accountNonExpired = accountNonExpired;
+	    }
+	    public boolean isAccountNonLocked() {
+	        return accountNonLocked;
+	    }
+	    public void setAccountNonLocked(boolean accountNonLocked) {
+	        this.accountNonLocked = accountNonLocked;
+	    }
+	    public boolean isCredentialsNonExpired() {
+	        return credentialsNonExpired;
+	    }
+	    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+	        this.credentialsNonExpired = credentialsNonExpired;
+	    }
+	    public boolean isEnabled() {
+	        return enabled;
+	    }
+	    public void setEnabled(boolean enabled) {
+	        this.enabled = enabled;
+	    }
+
+		@Override
+		public String getPassword() {
+			return this.operatorPassword;
+		}
+
+		@Override
+		public String getUsername() {
+			return this.operatorUsername;
+		}
+		public String getOperatorRole() {
+			return operatorRole;
+		}
+		public void setOperatorRole(String operatorRole) {
+			this.operatorRole = operatorRole;
+		}
 
 }

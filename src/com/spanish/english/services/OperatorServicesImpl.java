@@ -45,4 +45,9 @@ public class OperatorServicesImpl implements OperatorServices{
 		return operatorDao.deleteOperator(operatorId);
 	}
 
+	@Override
+	public Operator getOperatorByUsername(String username) {
+		return operatorDao.getOperatorByUsername(username);
+	}
+
 }

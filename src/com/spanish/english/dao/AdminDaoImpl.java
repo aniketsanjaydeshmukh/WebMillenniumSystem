@@ -79,11 +79,13 @@ public class AdminDaoImpl implements AdminDao{
 	    	e.printStackTrace();
 	    }
 	    session.close();
+	    if(admin != null){
 	    Role r = new Role();
         r.setName("ROLE_ADMIN");
         List<Role> roles = new ArrayList<Role>();
         roles.add(r);
         admin.setAuthorities(roles);
+	    }
 		return admin;	
 	}
 

@@ -361,8 +361,8 @@ function editSchool(id,business,name,email,telephone,address,username,password,s
 	$("#email").val(email);
 	$("#telephone").val(telephone);
 	$("#address").val(address);
-	$("#username").val(username);
-	$("#password").val(password);
+	$("#operatorUsername").val(username);
+	$("#operatorPassword").val(password);
 	$("#sector").val(sector);
 	$("#population").val(population);
 	$("#province").val(province);
@@ -445,6 +445,9 @@ function checkUsernameUpdate(){
     }});
 // }); 
 }
+function showAlert(){
+	alert("h");
+}
 
 function checkUsernameRegister(){
 
@@ -484,13 +487,47 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-        	schoolName: {
+        	business: {
                 validators: {
                     notEmpty: {
-                        message: 'The schoolName is required'
+                        message: 'The bussiness name is required'
                     }
                 }
             },
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: 'The name is required'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email is required'
+                    },
+                    emailAddress: {
+                        message: 'The value is not a valid email address'
+                    },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'The value is not a valid email address'
+                    }
+                }
+            },
+            
+            telephone: {
+                validators: {
+                    notEmpty: {
+                        message: 'The telephone is required'
+                    },
+                    phone: {
+                        country: 'countrySelectBox',
+                        message: 'The value is not valid %s phone number'
+                    }
+                }
+            },
+            
             address: {
                 validators: {
                     notEmpty: {
@@ -498,32 +535,56 @@ $(document).ready(function() {
                     }
                 }
             },
-            details: {
+            operatorUsername: {
                 validators: {
                     notEmpty: {
-                        message: 'The Details is required'
+                        message: 'The password is required'
+                    }
+                }
+            },
+            operatorPassword: {
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required'
+                    }
+                }
+            },
+            sector: {
+                validators: {
+                    notEmpty: {
+                        message: 'The sector is required'
+                    }
+                }
+            },
+            population: {
+                validators: {
+                    notEmpty: {
+                        message: 'The population is required'
+                    }
+                }
+            },
+            province: {
+                validators: {
+                    notEmpty: {
+                        message: 'The province is required'
                     }
                 }
             },
             
-            location: {
+            identity_card: {
                 validators: {
                     notEmpty: {
-                        message: 'The Location is required'
-                    }
-                }
-            },
-            
-            city: {
-                validators: {
-                    notEmpty: {
-                        message: 'The city is required'
+                        message: 'The identity_card is required'
                     }
                 }
             }
             
         }
-    });
+    })
+    // Revalidate phone number when changing the country
+        .on('change', '[name="countrySelectBox"]', function(e) {
+            $('#phoneForm').formValidation('revalidateField', 'telephone');
+        });
     
     $('#editForm').formValidation({
         framework: 'bootstrap',
@@ -534,13 +595,43 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-        	schoolName: {
+        	business: {
                 validators: {
                     notEmpty: {
-                        message: 'The schoolName is required'
+                        message: 'The bussiness name is required'
                     }
                 }
             },
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: 'The name is required'
+                    }
+                }
+            },
+            email: {
+                validators: {
+                    notEmpty: {
+                        message: 'The email is required'
+                    },
+                    emailAddress: {
+                        message: 'The value is not a valid email address'
+                    },
+                    regexp: {
+                        regexp: '^[^@\\s]+@([^@\\s]+\\.)+[^@\\s]+$',
+                        message: 'The value is not a valid email address'
+                    }
+                }
+            },
+            
+            telephone: {
+                validators: {
+                    notEmpty: {
+                        message: 'The telephone is required'
+                    }
+                }
+            },
+            
             address: {
                 validators: {
                     notEmpty: {
@@ -548,35 +639,55 @@ $(document).ready(function() {
                     }
                 }
             },
-            details: {
+            operatorPassword: {
                 validators: {
                     notEmpty: {
-                        message: 'The Details is required'
+                        message: 'The password is required'
+                    }
+                }
+            },
+            operatorUsername: {
+                validators: {
+                    notEmpty: {
+                        message: 'The username is required'
+                    }
+                }
+            },
+            sector: {
+                validators: {
+                    notEmpty: {
+                        message: 'The sector is required'
+                    }
+                }
+            },
+            population: {
+                validators: {
+                    notEmpty: {
+                        message: 'The population is required'
+                    }
+                }
+            },
+            province: {
+                validators: {
+                    notEmpty: {
+                        message: 'The province is required'
                     }
                 }
             },
             
-            location: {
+            identity_card: {
                 validators: {
                     notEmpty: {
-                        message: 'The Location is required'
+                        message: 'The identity_card is required'
                     }
                 }
-            },
-            
-            city: {
-                validators: {
-                    notEmpty: {
-                        message: 'The city is required'
-                    }
-                }
-            }
-            
+            }            
         }
     });
     
     
 });
+
 </script>
 
 
@@ -638,13 +749,13 @@ $(document).ready(function() {
                                     <td>${operator.email}</td>
                                     <td>${operator.telephone}</td>
                                     <td>${operator.address}</td>
-                                    <td>${operator.username}</td>
-                                    <td>${operator.password}</td>
+                                    <td>${operator.operatorUsername}</td>
+                                    <td>${operator.operatorPassword}</td>
                                     <td>${operator.sector}</td>
                                     <td>${operator.population}</td>
                                     <td>${operator.identity_card}</td>
                                     <td>${operator.province}</td>
-                                    <td><button type="submit" class="btn btn-default btn-sm" onClick="editSchool('${operator.id}','${operator.business}','${operator.name}','${operator.email}','${operator.telephone}','${operator.address}','${operator.username}','${operator.password}','${operator.sector}','${operator.population}','${operator.province}','${operator.identity_card}');"><i class="fa fa-pencil-square-o"></i> <spring:message code="label.edit"/></button></td>
+                                    <td><button type="submit" class="btn btn-default btn-sm" onClick="editSchool('${operator.id}','${operator.business}','${operator.name}','${operator.email}','${operator.telephone}','${operator.address}','${operator.operatorUsername}','${operator.operatorPassword}','${operator.sector}','${operator.population}','${operator.province}','${operator.identity_card}');"><i class="fa fa-pencil-square-o"></i> <spring:message code="label.edit"/></button></td>
                                  </tr>
                           	</c:forEach>                                                                                    
                           </tbody>
@@ -676,43 +787,70 @@ $(document).ready(function() {
                     <div class="form-group">
                         <form:label path="business" class="col-sm-3 control-label"><spring:message code="label.business"/> &#42;</form:label>
                         <div class="col-sm-8">
-                       		<form:input type="text" path="business" id="a" value="" class="form-control" maxlength="50" onblur = "useHTML(this.id,document.getElementById('a').value)"/>
+                       		<form:input type="text" path="business" id="businesss" name="businesss" value="" class="form-control" maxlength="50" onblur = "useHTML(this.id,document.getElementById('a').value)"/>
                        	</div>
                     </div>
                   	<div class="form-group">
                         <form:label path="name" class="col-sm-3 control-label"><spring:message code="label.name"/> &#42;</form:label>
                         <div class="col-sm-8">
-                            <form:input type="text" path="name" id="b" value="" class="form-control" maxlength="50" onblur = "useHTML(this.id,document.getElementById('b').value)"/>
+                            <form:input type="text" path="name" id="namee" name="namee" value="" class="form-control" maxlength="50" onblur = "useHTML(this.id,document.getElementById('b').value)"/>
                       	</div>
                    	</div>
                     <div class="form-group">
                         <form:label path="email" class="col-sm-3 control-label"><spring:message code="label.email"/> &#42;</form:label>
                         <div class="col-sm-8">
-                            <form:input type="text" path="email" id="c" value="" class="form-control" maxlength="60" onblur = "useHTML(this.id,document.getElementById('c').value)"/>
+                            <form:input type="text" path="email" id="emaill" name="emaill" value="" class="form-control" maxlength="60" onblur = "useHTML(this.id,document.getElementById('c').value)"/>
                       	</div>
                     </div>
                     <div class="form-group">
+				        <label class="col-xs-3 control-label">Country</label>
+				        <div class="col-xs-5">
+				            <select class="form-control" name="countrySelectBox">
+				                <option value="US">United States</option>
+				                <option value="BG">Bulgaria</option>
+				                <option value="BR">Brazil</option>
+				                <option value="CN">China</option>
+				                <option value="CZ">Czech Republic</option>
+				                <option value="DK">Denmark</option>
+				                <option value="FR">France</option>
+				                <option value="DE">Germany</option>
+				                <option value="IN">India</option>
+				                <option value="MA">Morocco</option>
+				                <option value="NL">Netherlands</option>
+				                <option value="PK">Pakistan</option>
+				                <option value="RO">Romania</option>
+				                <option value="RU">Russia</option>
+				                <option value="SK">Slovakia</option>
+				                <option value="ES">Spain</option>
+				                <option value="TH">Thailand</option>
+				                <option value="AE">United Arab Emirates</option>
+				                <option value="GB">United Kingdom</option>
+				                <option value="VE">Venezuela</option>
+				            </select>
+				        </div>
+				    </div>
+                    <div class="form-group">
                         <form:label path="telephone" class="col-sm-3 control-label"><spring:message code="label.telephone"/> &#42;</form:label>
                         <div class="col-sm-8">
-                            <form:input type="text" path="telephone" id="d" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('d').value)"/>
+                            <form:input type="text" path="telephone" id="telephonee" name="telephonee" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('d').value)"/>
                      	</div>
                     </div>
                     <div class="form-group">
                         <form:label path="address" class="col-sm-3 control-label"><spring:message code="label.address"/> &#42;</form:label>
                         <div class="col-sm-8">
-                            <form:input type="text" path="address" id="e" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('e').value)"/>
+                            <form:input type="text" path="address" id="addresss" name="addresss" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('e').value)"/>
                      	</div>
                     </div>
                     <div class="form-group">
-                        <form:label path="username" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
+                        <form:label path="operatorUsername" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="username" id="f" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('f').value)"/>
+                            <form:input type="text" path="operatorUsername" id="operatorUsernamee" name="operatorUsernamee" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('f').value)"/>
                       	</div>
                     </div>
                     <div class="form-group">
-                        <form:label path="password" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
+                        <form:label path="operatorPassword" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="password" id="g" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('g').value)"/>
+                            <form:input type="text" path="operatorPassword" id="operatorPasswordd" name="operatorPasswordd" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('g').value)"/>
                       	</div>
                     </div>
                     
@@ -720,21 +858,21 @@ $(document).ready(function() {
                      <div class="form-group">
                         <form:label path="sector" class="col-sm-3 control-label"><spring:message code="label.sector"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="sector" id="h" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('h').value)"/>
+                            <form:input type="text" path="sector" id="sectorr" name="sectorr" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('h').value)"/>
                       	</div>
                     </div>
                     
                      <div class="form-group">
                         <form:label path="population" class="col-sm-3 control-label"><spring:message code="label.population"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="population" id="i" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('i').value)"/>
+                            <form:input type="text" path="population" id="populationn" name="populationn" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('i').value)"/>
                       	</div>
                     </div>
                     
                     <div class="form-group">
                         <form:label path="province" class="col-sm-3 control-label"><spring:message code="label.province"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="province" id="j" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('j').value)"/>
+                            <form:input type="text" path="province" id="provincee" name="provincee" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('j').value)"/>
                       	</div>
                     </div>
                     
@@ -742,7 +880,7 @@ $(document).ready(function() {
                     <div class="form-group">
                         <form:label path="identity_card" class="col-sm-3 control-label"><spring:message code="label.identity_card"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="identity_card" id="k" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('k').value)"/>
+                            <form:input type="text" path="identity_card" id="identity_cardd" name="identity_cardd" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('k').value)"/>
                       	</div>
                     </div>
            			<input type="hidden" name="action" value="add" />
@@ -806,15 +944,15 @@ $(document).ready(function() {
                      	</div>
                     </div>
                     <div class="form-group">
-                        <form:label path="username" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
+                        <form:label path="operatorUsername" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="username" id="username" value="" class="form-control" maxlength="20" />
+                            <form:input type="text" path="operatorUsername" id="operatorUsername" value="" class="form-control" maxlength="20" />
                       	</div>
                     </div>
                      <div class="form-group">
-                        <form:label path="password" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
+                        <form:label path="operatorPassword" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="password" id="password" value="" class="form-control" maxlength="20" />
+                            <form:input type="text" path="operatorPassword" id="operatorPassword" value="" class="form-control" maxlength="20" />
                       	</div>
                     </div>
                     

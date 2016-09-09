@@ -46,4 +46,24 @@ public class MachineServicesImpl implements MachineServices{
 		return machineDao.deleteMachine(Id);
 	}
 
+	@Override
+	public Set<Machine> getMachineListByStatus(String status) {
+		return machineDao.getMachineListByStatus(status);
+	}
+
+	@Override
+	public Set<Machine> getMachineListByOperatorId(long id) {
+		return machineDao.getMachineListByOperatorId(id);
+	}
+
+	@Override
+	public boolean machineUpdate(Machine mahine) {
+		return machineDao.machineUpdate(mahine);
+	}
+
+	@Override
+	public Set<Machine> getMachineListByEstablishmentId(long id) {
+		return machineDao.getMachineListByEstablishmentId(id);
+	}
+
 }

@@ -62,9 +62,9 @@
                                   <div class="form-group">
                                     <label> <i class="fa fa-user"></i> <spring:message code="label.accountMsg"/></label>
                                     <select name="account" class="form-control">
-                                        <option value="Admin"><spring:message code="label.userRole1"/></option>
-                                        <option value="Operator"><spring:message code="label.userRole2"/></option>
-                                        <option value="SubOperator"><spring:message code="label.userRole3"/></option>
+                                        <option value="ROLE_ADMIN"><spring:message code="label.userRole1"/></option>
+                                        <option value="ROLE_OPERATOR"><spring:message code="label.userRole2"/></option>
+                                        <option value="ROLE_ESTABLISHMENT"><spring:message code="label.userRole3"/></option>
                                         
                             		</select>
                                   </div>
@@ -93,8 +93,8 @@
                                         </div>
                                     </div>
                                   </div>
-                                  <input type="hidden" name="${_csrf.parameterName}"
-			value="${_csrf.token}" />
+                                  <%-- <input type="hidden" name="${_csrf.parameterName}"
+			value="${_csrf.token}" /> --%>
                           </form:form>
                           
                         </div>

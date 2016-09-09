@@ -2,7 +2,6 @@ package com.spanish.english.form;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,9 +38,17 @@ public class Machine implements Serializable{
 	private String machinelock;
 	private String repairHistory;
 	
-	@ManyToOne(cascade=CascadeType.ALL)  
+	@ManyToOne 
 	private Admin admin;
 	
+	@ManyToOne 
+	private Operator operator;
+	
+	@ManyToOne
+	private Establishment establishment;
+	
+	@ManyToOne
+	private Technician technician;
 	
 	public long getId() {
 		return id;
@@ -120,6 +127,24 @@ public class Machine implements Serializable{
 	}
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
+	}
+	public Operator getOperator() {
+		return operator;
+	}
+	public void setOperator(Operator operator) {
+		this.operator = operator;
+	}
+	public Establishment getEstablishment() {
+		return establishment;
+	}
+	public void setEstablishment(Establishment establishment) {
+		this.establishment = establishment;
+	}
+	public Technician getTechnician() {
+		return technician;
+	}
+	public void setTechnician(Technician technician) {
+		this.technician = technician;
 	}
 
 }

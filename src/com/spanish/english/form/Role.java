@@ -16,6 +16,11 @@ import org.springframework.security.core.GrantedAuthority;
 @Proxy(lazy=false)
 public class Role implements GrantedAuthority{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4915994965621823583L;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -26,6 +31,12 @@ public class Role implements GrantedAuthority{
 	 @ManyToOne(cascade=CascadeType.ALL)  
 	private Admin admin;
 	 
+	 @ManyToOne(cascade=CascadeType.ALL)  
+		private Operator operator;
+	 
+	 @ManyToOne(cascade=CascadeType.ALL)  
+		private Establishment establishment;
+	 
 	public Admin getAdmin() {
 		return admin;
 	}
@@ -34,6 +45,18 @@ public class Role implements GrantedAuthority{
 
 	public void setAdmin(Admin admin) {
 		this.admin = admin;
+	}
+
+
+
+	public Operator getOperator() {
+		return operator;
+	}
+
+
+
+	public void setOperator(Operator operator) {
+		this.operator = operator;
 	}
 
 
@@ -52,4 +75,28 @@ public class Role implements GrantedAuthority{
     public void setName(String name) {
         this.name = name;
     }
+
+
+
+	public long getId() {
+		return id;
+	}
+
+
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+
+
+	public Establishment getEstablishment() {
+		return establishment;
+	}
+
+
+
+	public void setEstablishment(Establishment establishment) {
+		this.establishment = establishment;
+	}
 }

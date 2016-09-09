@@ -89,6 +89,22 @@
 				<value>com.spanish.english.form.Machine</value>
 				<value>com.spanish.english.form.Admin</value>
 				<value>com.spanish.english.form.Role</value>
+				<value>com.spanish.english.form.Technician</value>
+				<value>com.spanish.english.form.Country</value>
+				<value>com.spanish.english.form.MachineType</value>
+				<value>com.spanish.english.form.HopperType</value>
+				<value>com.spanish.english.form.CoinValidatorType</value>
+				<value>com.spanish.english.form.BillValidatorType</value>
+				<value>com.spanish.english.form.CoinsType</value>
+				<value>com.spanish.english.form.TokensType</value>
+				<value>com.spanish.english.form.BillsType</value>
+				<value>com.spanish.english.form.CoinsValue</value>
+				<value>com.spanish.english.form.TokensValue</value>
+				<value>com.spanish.english.form.BillsValue</value>
+				<value>com.spanish.english.form.CountryCoinsValue</value>
+				<value>com.spanish.english.form.CountryTokensValue</value>
+				<value>com.spanish.english.form.CountryBillsValue</value>
+				
 			</list>
 		</property>
 		

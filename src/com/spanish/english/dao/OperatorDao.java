@@ -9,4 +9,6 @@ public interface OperatorDao {
 	Set<Operator> getOperatorList();
 	Operator getOperatorById(long operatorId);
 	boolean deleteOperator(long operatorId);
+	Operator getOperatorByUsername(String username);
+	
 }

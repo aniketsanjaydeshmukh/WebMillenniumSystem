@@ -41,10 +41,10 @@ public class Admin implements Serializable, UserDetails{
 	@OneToMany(targetEntity=Operator.class,cascade=CascadeType.ALL, mappedBy="admin")  
 	private Set<Operator> operators;
 	
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=Operator.class,cascade=CascadeType.ALL, mappedBy="admin")  
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=Establishment.class,cascade=CascadeType.ALL, mappedBy="admin")  
 	private Set<Establishment> establishment;
 	
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=Operator.class,cascade=CascadeType.ALL, mappedBy="admin")  
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=Machine.class,cascade=CascadeType.ALL, mappedBy="admin")  
 	private Set<Machine> machine;
 	
 	/* Spring Security related fields*/

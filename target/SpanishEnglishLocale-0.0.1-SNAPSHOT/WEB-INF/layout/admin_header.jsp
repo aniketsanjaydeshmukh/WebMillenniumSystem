@@ -4,8 +4,10 @@
 	<li id="schoolsActive" ><a href="${pageContext.request.contextPath}/admin/operators.html"><spring:message code="label.operator"/></a></li>
  	<li id="schoolAdminActive" ><a href="${pageContext.request.contextPath}/admin/establishment.html"><spring:message code="label.establishment"/></a></li> 
 	<li id="reportActive" ><a href="${pageContext.request.contextPath}/admin/machine.html"><spring:message code="label.machine"/></a></li>
-	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/settings"><spring:message code="label.setting"/></a></li>
+	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/country.html"><spring:message code="label.country"/></a></li>
+	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/machineType.html"><spring:message code="label.machineType"/></a></li>
 </ul>
+
 
 <script>
 $(function(){

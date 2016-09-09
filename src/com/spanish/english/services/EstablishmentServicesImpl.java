@@ -31,11 +31,13 @@ public class EstablishmentServicesImpl implements EstablishmentServices{
 		return establishmentDao.addOrUpdateEstablishment(establishment);
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false) 
 	@Override
 	public Set<Establishment> getEstablishmentList() {
 		return establishmentDao.getEstablishmentList();
 	}
 
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = false) 
 	@Override
 	public Establishment getEstablishmentById(long id) {
 		return establishmentDao.getEstablishmentById(id);
@@ -45,5 +47,10 @@ public class EstablishmentServicesImpl implements EstablishmentServices{
 	public boolean deleteEstablishment(long Id) {
 		
 		return establishmentDao.deleteEstablishment(Id);
+	}
+
+	@Override
+	public Establishment getEstablishmentByUsername(String username) {
+		return establishmentDao.getEstablishmentByUsername(username);
 	}
 }

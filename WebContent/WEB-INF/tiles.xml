@@ -50,4 +50,122 @@
     <definition name="machineList" extends="admin.definition" >  
         <put-attribute name="body" value="/WEB-INF/jsp/machineList.jsp"></put-attribute>  
   </definition>  
+  
+  
+  <definition name="assignMachine" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/assignMachine.jsp"></put-attribute>  
+  </definition>
+  
+  
+  <definition name="countryList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/countryList.jsp"></put-attribute>  
+  </definition>
+  
+  
+  <definition name="machineTypeList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/machineTypeList.jsp"></put-attribute>  
+  </definition>
+  
+
+   <definition name="paymentDevice" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/paymentDevice.jsp"></put-attribute>  
+  </definition>
+  
+  
+  <definition name="hopperTypeInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/hopperTypeInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="coinsValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/coinsValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="countryCoinValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/countryCoinValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="tokensValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/tokensValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="countryTokenValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/countryTokenValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addHopperCapacity" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addHopperCapacity.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addCoinValidatorCapacity" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCoinValidatorCapacity.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="coinValidatorInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/coinValidatorInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="billsValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/billsValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="countryBillValueInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/countryBillValueInfo.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addBillValidatorCapacity" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addBillValidatorCapacity.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="machineTypeControl" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/machineTypeControl.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="operator.definition"  
+        template="/WEB-INF/layout/admin_layout.jsp">  
+        <put-attribute name="title" value="EmployeeMangement" />  
+        <put-attribute name="header" value="/WEB-INF/layout/operator_header.jsp" />  
+        <put-attribute name="logo" value="/WEB-INF/layout/logo.jsp" />
+        <put-attribute name="menu" value="" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />  
+    </definition>  
+    
+     <definition name="operatordashboard"  extends="operator.definition">  
+        <put-attribute name="title" value="Admin" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/operator_home.jsp" />    
+  </definition>
+  
+  <definition name="machineOperator"  extends="operator.definition">  
+        <put-attribute name="title" value="Admin" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/operator_machine.jsp" />    
+  </definition>
+  
+  
+  <definition name="assignMachineOperator" extends="operator.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/assignMachineOperator.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="establishment.definition"  
+        template="/WEB-INF/layout/admin_layout.jsp">  
+        <put-attribute name="title" value="EmployeeMangement" />  
+        <put-attribute name="header" value="/WEB-INF/layout/establishment_header.jsp" />  
+        <put-attribute name="logo" value="/WEB-INF/layout/logo.jsp" />
+        <put-attribute name="menu" value="" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp" />  
+    </definition> 
+    
+    <definition name="establishmentdashboard"  extends="establishment.definition">  
+        <put-attribute name="title" value="Establishment" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/establishment_home.jsp" />    
+  </definition>
+  
+  <definition name="machineEstablishment"  extends="establishment.definition">  
+        <put-attribute name="title" value="Admin" />   
+        <put-attribute name="body" value="/WEB-INF/jsp/establishment_machine.jsp" />    
+  </definition>
+  
+    <definition name="technicianList" extends="establishment.definition">  
+        <put-attribute name="body" value="/WEB-INF/jsp/technicianList.jsp"></put-attribute>  
+  </definition>
 </tiles-definitions>

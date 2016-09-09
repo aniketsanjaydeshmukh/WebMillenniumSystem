@@ -10,13 +10,13 @@
 		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
 		<form-login
 		    login-page="/contacts"
-		    default-target-url="/dashboard.html"
+		    default-target-url="/default.html"
 			authentication-failure-url="/contacts?error"
 			username-parameter="adminUsername"
 			password-parameter="adminPassword" />
 		<logout logout-success-url="/contacts?logout" />
 		<!-- enable csrf protection -->
-		<csrf/>
+		<!-- <csrf/> -->
 	</http>
 
 	 <!-- <authentication-manager>

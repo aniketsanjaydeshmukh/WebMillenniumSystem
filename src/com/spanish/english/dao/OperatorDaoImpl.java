@@ -1,5 +1,6 @@
 package com.spanish.english.dao;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spanish.english.form.Operator;
+import com.spanish.english.form.Role;
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class OperatorDaoImpl implements OperatorDao{
@@ -92,6 +94,30 @@ public class OperatorDaoImpl implements OperatorDao{
 			e.printStackTrace();
 		}
 		return flag;
+	}
+
+	@Override
+	public Operator getOperatorByUsername(String username) {
+		Operator operator = null;
+	    try{  	
+	    session = sessionFactory.openSession();
+		Criteria c = session.createCriteria(Operator.class);
+		c.add(Restrictions.eq("operatorUsername",username));
+		
+		operator =(Operator) c.uniqueResult();
+			
+	    }catch(Exception e){
+	    	e.printStackTrace();
+	    }
+	    session.close();
+	    if(operator != null){
+	    Role r = new Role();
+        r.setName("ROLE_OPERATOR");
+        List<Role> roles = new ArrayList<Role>();
+        roles.add(r);
+        operator.setAuthorities(roles);
+	    }
+		return operator;	
 	}
 
 }

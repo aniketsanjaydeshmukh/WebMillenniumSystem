@@ -30,10 +30,19 @@
             </div>
             
             <div class="col-md-2 col-sm-3">
-               <a href="${pageContext.request.contextPath}/admin/settings" class="menu-link">
+               <a href="${pageContext.request.contextPath}/admin/machineType.html" class="menu-link">
                     <div class="menu-block m-block5">
                         <div class="menu-icon"><i class="fa fa-cog"></i></div>
-                        <div class="menu-name"><spring:message code="label.setting"/></div>
+                        <div class="menu-name"><spring:message code="label.machineType"/></div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="col-md-2 col-sm-3">
+               <a href="${pageContext.request.contextPath}/admin/country.html" class="menu-link">
+                    <div class="menu-block m-block5">
+                        <div class="menu-icon"><i class="fa fa-cog"></i></div>
+                        <div class="menu-name"><spring:message code="label.country"/></div>
                     </div>
                 </a>
             </div>

@@ -651,8 +651,8 @@ $(document).ready(function() {
                                     <td>${establishment.geolocation}</td>
                                     <td>${establishment.phone}</td>
                                     <td>${establishment.address}</td>
-                                    <td>${establishment.username}</td>
-                                    <td>${establishment.password}</td>
+                                    <td>${establishment.establishmentUsername}</td>
+                                    <td>${establishment.establishmentPassword}</td>
                                     <td>${establishment.sector}</td>
                                     <td>${establishment.population}</td>
                                     <td>${establishment.province}</td>
@@ -666,7 +666,7 @@ $(document).ready(function() {
                                     <td>${establishment.prepayments}</td>
                                      <td>${establishment.fund}</td>
                                   
-                                    <td><button type="submit" class="btn btn-default btn-sm" onClick="editSchool('${establishment.id}','${establishment.establishmentName}','${establishment.geolocation}','${establishment.dischargeDate}','${establishment.phone}','${establishment.address}','${establishment.username}','${establishment.password}','${establishment.sector}','${establishment.population}','${establishment.province}','${establishment.percentage}','${establishment.establishmentsType}','${establishment.status}','${establishment.hours}','${establishment.loans}','${establishment.withdrawals}','${establishment.fund}','${establishment.prepayments}');"><i class="fa fa-pencil-square-o"></i> <spring:message code="label.edit"/></button></td>
+                                    <td><button type="submit" class="btn btn-default btn-sm" onClick="editSchool('${establishment.id}','${establishment.establishmentName}','${establishment.geolocation}','${establishment.dischargeDate}','${establishment.phone}','${establishment.address}','${establishment.establishmentUsername}','${establishment.establishmentPassword}','${establishment.sector}','${establishment.population}','${establishment.province}','${establishment.percentage}','${establishment.establishmentsType}','${establishment.status}','${establishment.hours}','${establishment.loans}','${establishment.withdrawals}','${establishment.fund}','${establishment.prepayments}');"><i class="fa fa-pencil-square-o"></i> <spring:message code="label.edit"/></button></td>
                                  </tr>
                           	</c:forEach>                                                                                    
                           </tbody>
@@ -722,15 +722,15 @@ $(document).ready(function() {
                      	</div>
                     </div>
                     <div class="form-group">
-                        <form:label path="username" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
+                        <form:label path="establishmentUsername" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="username" id="f" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('f').value)"/>
+                            <form:input type="text" path="establishmentUsername" id="f" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('f').value)"/>
                       	</div>
                     </div>
                     <div class="form-group">
-                        <form:label path="password" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
+                        <form:label path="establishmentPassword" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="password" id="g" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('g').value)"/>
+                            <form:input type="text" path="establishmentPassword" id="g" value="" class="form-control" maxlength="20" onblur = "useHTML(this.id,document.getElementById('g').value)"/>
                       	</div>
                     </div>
                     
@@ -877,15 +877,15 @@ $(document).ready(function() {
                     </div>
                     </div>
                     <div class="form-group">
-                        <form:label path="username" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
+                        <form:label path="establishmentUsername" class="col-sm-3 control-label"><spring:message code="label.username"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="username" id="username" value="" class="form-control" maxlength="20" />
+                            <form:input type="text" path="establishmentUsername" id="username" value="" class="form-control" maxlength="20" />
                       	</div>
                     </div>
                      <div class="form-group">
-                        <form:label path="password" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
+                        <form:label path="establishmentPassword" class="col-sm-3 control-label"><spring:message code="label.password"/> &#42;</form:label>
                      	<div class="col-sm-8">
-                            <form:input type="text" path="password" id="password" value="" class="form-control" maxlength="20" />
+                            <form:input type="text" path="establishmentPassword" id="password" value="" class="form-control" maxlength="20" />
                       	</div>
                     </div>                   
                     <div class="form-group">
