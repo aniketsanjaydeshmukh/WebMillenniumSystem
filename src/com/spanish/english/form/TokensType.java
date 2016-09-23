@@ -30,8 +30,8 @@ public class TokensType implements Serializable{
 	@Column(name = "id")
 	private long id;
 
-	@ManyToOne  
-	HopperType hopperType;
+	/*@ManyToOne  
+	HopperType hopperType;*/
 	
 	@OneToMany(fetch = FetchType.EAGER,targetEntity=TokensValue.class,cascade=CascadeType.ALL, mappedBy="tokensType")  
 	private Set<TokensValue> tokensValue;
@@ -44,11 +44,11 @@ public class TokensType implements Serializable{
 		this.id = id;
 	}
 
-	public HopperType getHopperType() {
+	/*public HopperType getHopperType() {
 		return hopperType;
 	}
 
 	public void setHopperType(HopperType hopperType) {
 		this.hopperType = hopperType;
-	}
+	}*/
 }

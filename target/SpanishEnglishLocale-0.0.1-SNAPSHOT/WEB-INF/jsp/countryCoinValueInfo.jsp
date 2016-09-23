@@ -29,8 +29,9 @@
 	       <c:forEach var="country" items="${countryList}">
 	       		  <input type="hidden"  value="${country.id}" id="countryValuesID" name="countryValuesID" class="form-control"/>
 	       		  <label class="col-sm-3">${country.country}</label>
+	       		       (in ${country.currency} )
 	       		  <input type="text"  value="" id="countryValues" name="countryValues" class="form-control"/>
-	       		  (in ${country.currency} )
+	       		  
 	       </c:forEach>
 	      </div>
 	      </div>

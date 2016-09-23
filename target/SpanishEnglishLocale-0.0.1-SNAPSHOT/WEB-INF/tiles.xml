@@ -120,6 +120,51 @@
         <put-attribute name="body" value="/WEB-INF/jsp/machineTypeControl.jsp"></put-attribute>  
   </definition>
   
+  
+  <definition name="tokenList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/tokenList.jsp"></put-attribute>  
+  </definition>
+  
+   <definition name="billList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/billList.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addCoinsName" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCoinsName.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addNotesName" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addNotesName.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="tokensNameValueList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/tokensNameValueList.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="billsNameValueList" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/billsNameValueList.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addCountryCoinsValue" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCountryCoinsValue.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addCountryNotesValue" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCountryNotesValue.jsp"></put-attribute>  
+  </definition>
+  
+    <definition name="addCountryTokensValue" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCountryTokensValue.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="addCountryBillsValue" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/addCountryBillsValue.jsp"></put-attribute>  
+  </definition>
+  
+  <definition name="billValidatorTypeInfo" extends="admin.definition" >  
+        <put-attribute name="body" value="/WEB-INF/jsp/billValidatorTypeInfo.jsp"></put-attribute>  
+  </definition>
+  
   <definition name="operator.definition"  
         template="/WEB-INF/layout/admin_layout.jsp">  
         <put-attribute name="title" value="EmployeeMangement" />  

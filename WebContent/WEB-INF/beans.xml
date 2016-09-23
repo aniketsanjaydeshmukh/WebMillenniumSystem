@@ -64,6 +64,30 @@
 	<bean id="CountryBillsValueDao" class="com.spanish.english.dao.CountryBillsValueDaoImpl" ></bean>
 	<bean id="CountryBillsValueServices" class="com.spanish.english.services.CountryBillsValueServicesImpl" ></bean>
 	
+	<bean id="TokensNameDao" class="com.spanish.english.dao.TokensNameDaoImpl" ></bean>
+	<bean id="TokensNameServices" class="com.spanish.english.services.TokensNameServicesImpl" ></bean> 
+	
+	<bean id="BillsNameDao" class="com.spanish.english.dao.BillsNameDaoImpl" ></bean>
+	<bean id="BillsNameServices" class="com.spanish.english.services.BillsNameServicesImpl" ></bean>
+	
+	<bean id="CoinsNameDao" class="com.spanish.english.dao.CoinsNameDaoImpl" ></bean>
+	<bean id="CoinsNameServices" class="com.spanish.english.services.CoinsNameServicesImpl" ></bean>
+	
+	<bean id="NotesNameDao" class="com.spanish.english.dao.NotesNameDaoImpl" ></bean>
+	<bean id="NotesNameServices" class="com.spanish.english.services.NotesNameServicesImpl" ></bean>
+	
+	<bean id="CountryNotesValueDao" class="com.spanish.english.dao.CountryNotesValueDaoImpl" ></bean>
+	<bean id="CountryNotesValueServices" class="com.spanish.english.services.CountryNotesValueServicesImpl" ></bean>
+	
+	
+	<bean id="TokensNameValueDao" class="com.spanish.english.dao.TokensNameValueDaoImpl" ></bean>
+	<bean id="TokensNameValueServices" class="com.spanish.english.services.TokensNameValueServicesImpl" ></bean>
+	
+	<bean id="BillsNameValueDao" class="com.spanish.english.dao.BillsNameValueDaoImpl" ></bean>
+	<bean id="BillsNameValueServices" class="com.spanish.english.services.BillsNameValueServicesImpl" ></bean>
+	
+	
+	
 	<bean id="customAuthenticationProvider" class="com.spanish.english.authentication.provider.CustomAuthenticationProvider" ></bean>
 	
 </beans>

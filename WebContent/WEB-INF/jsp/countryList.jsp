@@ -600,11 +600,11 @@ $(document).ready(function() {
                 <h4 class="modal-title"><center><spring:message code="label.countryDetails"/></center></h4>
             </div>
             
-           
              <form:form id="frm" class="form-horizontal" method="POST" name="frm" action="${pageContext.request.contextPath}/admin/country.html" commandName="country">
             <div class="modal-body">
                 
-                      	<input type="hidden" name="action" id="action" value="add">
+                     <input type="hidden" name="action" id="action" value="add">
+                     
                     <div class="form-group">
                         <form:label path="country" class="col-sm-3 control-label"><spring:message code="label.country"/> &#42;</form:label>
                         <div class="col-sm-8">

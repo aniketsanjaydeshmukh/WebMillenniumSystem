@@ -37,8 +37,8 @@ public class CoinsValue implements Serializable{
 	@ManyToOne
 	CoinsType coinsType;
 
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryCoinsValue.class,cascade=CascadeType.ALL, mappedBy="coinsValue")  
-	private Set<CountryCoinsValue> countryCoinsValue;
+	/*@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryCoinsValue.class,cascade=CascadeType.ALL, mappedBy="coinsValue")  
+	private Set<CountryCoinsValue> countryCoinsValue;*/
 	
 	public long getId() {
 		return id;
@@ -64,13 +64,13 @@ public class CoinsValue implements Serializable{
 		this.coinsType = coinsType;
 	}
 
-	public Set<CountryCoinsValue> getCountryCoinsValue() {
+	/*public Set<CountryCoinsValue> getCountryCoinsValue() {
 		return countryCoinsValue;
 	}
 
 	public void setCountryCoinsValue(Set<CountryCoinsValue> countryCoinsValue) {
 		this.countryCoinsValue = countryCoinsValue;
-	}
+	}*/
 
 	public boolean isDone() {
 		return isDone;

@@ -151,12 +151,12 @@ $(document).ready(function() {
 				   <input type="hidden" name="action" id="action" value="addHopperAccept">
 				   <input type="hidden" name="mvid" id="mvid" value="${mvid}">
 				   		<div class="form-group">
-                        	<label  class="col-sm-3 control-label">What will accept in Hopper &#42;</label>
+                        	<label  class="col-sm-3 control-label">Is Hopper MultiCoin Or SingleCoin &#42;</label>
                         	
                       		<div class="col-sm-8">
-		                    	<select name="valueType" id="valueType" multiple = "true">
-		                    		  <option value="coin">coin</option>
-									   <option value="token">token</option>
+		                    	<select name="valueType" id="valueType" >
+		                    		  <option value="singleCoin">Signle Coin</option>
+									   <option value="multiCoin">Multi Coin</option>
 									   
 		                    	</select>
                     		</div>

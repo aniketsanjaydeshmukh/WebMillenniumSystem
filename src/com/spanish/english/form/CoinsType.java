@@ -30,11 +30,11 @@ public class CoinsType implements Serializable{
 	@Column(name = "id")
 	private long id;
 
-	@ManyToOne  
-	HopperType hopperType;
+	/*@ManyToOne  
+	HopperType hopperType;*/
 	
-	@ManyToOne
-	CoinValidatorType coinValidatorType;
+	/*@ManyToOne
+	CoinValidatorType coinValidatorType;*/
 	
 	@OneToMany(fetch = FetchType.EAGER,targetEntity=CoinsValue.class,cascade=CascadeType.ALL, mappedBy="coinsType")  
 	private Set<CoinsValue> coinsValue;
@@ -47,20 +47,20 @@ public class CoinsType implements Serializable{
 		this.id = id;
 	}
 
-	public HopperType getHopperType() {
+	/*public HopperType getHopperType() {
 		return hopperType;
 	}
 
 	public void setHopperType(HopperType hopperType) {
 		this.hopperType = hopperType;
-	}
+	}*/
 
-	public CoinValidatorType getCoinValidatorType() {
+	/*public CoinValidatorType getCoinValidatorType() {
 		return coinValidatorType;
 	}
 
 	public void setCoinValidatorType(CoinValidatorType coinValidatorType) {
 		this.coinValidatorType = coinValidatorType;
-	}
+	}*/
 
 }

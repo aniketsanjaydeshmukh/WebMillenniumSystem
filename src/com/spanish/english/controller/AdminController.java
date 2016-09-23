@@ -3,7 +3,9 @@ package com.spanish.english.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,38 +22,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spanish.english.form.Admin;
 import com.spanish.english.form.BillValidatorType;
+import com.spanish.english.form.BillsName;
+import com.spanish.english.form.BillsNameForm;
+import com.spanish.english.form.BillsNameValue;
 import com.spanish.english.form.BillsType;
 import com.spanish.english.form.BillsValue;
 import com.spanish.english.form.CoinValidatorType;
+import com.spanish.english.form.CoinsName;
+import com.spanish.english.form.CoinsNameForm;
 import com.spanish.english.form.CoinsType;
 import com.spanish.english.form.CoinsValue;
 import com.spanish.english.form.Country;
 import com.spanish.english.form.CountryBillsValue;
 import com.spanish.english.form.CountryCoinsValue;
+import com.spanish.english.form.CountryNotesValue;
 import com.spanish.english.form.CountryTokensValue;
 import com.spanish.english.form.Establishment;
 import com.spanish.english.form.HopperType;
 import com.spanish.english.form.Machine;
 import com.spanish.english.form.MachineType;
+import com.spanish.english.form.NotesName;
+import com.spanish.english.form.NotesNameForm;
 import com.spanish.english.form.Operator;
+import com.spanish.english.form.TokensName;
+import com.spanish.english.form.TokensNameForm;
+import com.spanish.english.form.TokensNameValue;
+import com.spanish.english.form.TokensNameValueForm;
 import com.spanish.english.form.TokensType;
 import com.spanish.english.form.TokensValue;
 import com.spanish.english.services.AdminServices;
 import com.spanish.english.services.BillValidatorTypeServices;
+import com.spanish.english.services.BillsNameServices;
+import com.spanish.english.services.BillsNameValueServices;
 import com.spanish.english.services.BillsTypeServices;
 import com.spanish.english.services.BillsValueServices;
 import com.spanish.english.services.CoinValidatorTypeServices;
+import com.spanish.english.services.CoinsNameServices;
 import com.spanish.english.services.CoinsTypeServices;
 import com.spanish.english.services.CoinsValueServices;
 import com.spanish.english.services.CountryBillsValueServices;
 import com.spanish.english.services.CountryCoinsValueServices;
+import com.spanish.english.services.CountryNotesValueServices;
 import com.spanish.english.services.CountryServices;
 import com.spanish.english.services.CountryTokensValueServices;
 import com.spanish.english.services.EstablishmentServices;
 import com.spanish.english.services.HopperTypeServices;
 import com.spanish.english.services.MachineServices;
 import com.spanish.english.services.MachineTypeServices;
+import com.spanish.english.services.NotesNameServices;
 import com.spanish.english.services.OperatorServices;
+import com.spanish.english.services.TokensNameServices;
+import com.spanish.english.services.TokensNameValueServices;
 import com.spanish.english.services.TokensTypeServices;
 import com.spanish.english.services.TokensValueServices;
 
@@ -114,6 +135,28 @@ public class AdminController {
 	
 	@Autowired
 	CountryBillsValueServices countryBillsValueServices;
+	
+	@Autowired
+	TokensNameServices tokensNameServices;
+	
+	@Autowired
+	BillsNameServices billsNameServices;
+	
+	@Autowired
+	CoinsNameServices coinsNameServices;
+	
+	@Autowired
+	NotesNameServices notesNameServices;
+	
+	@Autowired
+	TokensNameValueServices tokensNameValueServices;
+	
+	@Autowired
+	BillsNameValueServices billsNameValueServices;
+	
+	@Autowired
+	CountryNotesValueServices countryNotesValueServices;
+	
 	
 	
 	public static HashMap<String, Long> machineTypeMap = new HashMap<String, Long>();
@@ -287,13 +330,7 @@ public class AdminController {
 		for (int i = 0; i < str1.length; i++) {
 			
 			int id = Integer.parseInt(str1[i]);
-			
-			
 			establishmentServices.deleteEstablishment(id);
-		
-			
-			//model.addAttribute(new School());
-			
 		}
 		Set<Establishment> establishmentList= establishmentServices.getEstablishmentList();
 		model.addAttribute("establishmentActive", "establishmentActive");
@@ -430,12 +467,14 @@ public class AdminController {
 		}
 		
 		System.out.println("Action: "+action);
+		boolean isAdd = false;
 		if(action!=null){
 			if(action.equals("add")){
 				System.out.println("add country");
 				
 				if(countryServices.addOrUpdateCountry(country)){
 					System.out.println("country added");
+					isAdd = true;
 				}
 			}else if(action.equals("edit")){
 				Country cutry= countryServices.getCountryById(country.getId());
@@ -449,14 +488,200 @@ public class AdminController {
 			}
 		}
 		
+		if(isAdd){
+			Country lastCountry = countryServices.getLastCountry();
+			model.addAttribute("countryID", lastCountry.getId());
+			return "addCoinsName";
+		}else{
+		
+			Set<Country> countryList= countryServices.getCountryList();
+			model.addAttribute("countryActive", "countryActive");
+			model.addAttribute(new Country());
+			model.addAttribute("countryList", countryList);
+			return "countryList";
+		}
+	}
+
+	@RequestMapping(value="/addCoinsNameMore", method=RequestMethod.POST)
+	public String addCoinsNameMore(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		String countryID = request.getParameter("countryID");
+		System.out.println("countryID:"+countryID);
+		long cID = Long.parseLong(countryID);
+		Country country = countryServices.getCountryById(cID);
+		String code = request.getParameter("code");
+		String value = request.getParameter("value");
+		double val = Double.parseDouble(value);
+		CoinsName coinsName = new CoinsName();
+		coinsName.setCode(code);
+		coinsName.setValue(val);
+		coinsName.setCountry(country);
+		coinsNameServices.addOrUpdateCoinsName(coinsName);
+		model.addAttribute("countryID", cID);
+		return "addCoinsName";
+	}
+	
+	@RequestMapping(value = "/addCoinsNameDone")
+	public String addCoinsNameDone(@RequestParam("countryId") String str,@RequestParam("code") String code,@RequestParam("value") String value,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+			
+			int cID = Integer.parseInt(str);
+			Country country = countryServices.getCountryById(cID);
+			System.out.println("country:"+country.getId());
+			CoinsName coinsName = new CoinsName();
+			coinsName.setCode(code);
+			coinsName.setCountry(country);
+			double val = Double.parseDouble(value);
+			coinsName.setValue(val);
+			
+			coinsNameServices.addOrUpdateCoinsName(coinsName);
+		
+		
+			model.addAttribute("countryID", cID);
+			return "addNotesName";
+	}
+	
+	@RequestMapping(value="/addNotesNameMore", method=RequestMethod.POST)
+	public String addNotesNameMore(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		String countryID = request.getParameter("countryID");
+		System.out.println("countryID:"+countryID);
+		long cID = Long.parseLong(countryID);
+		Country country = countryServices.getCountryById(cID);
+		String code = request.getParameter("code");
+		String value = request.getParameter("value");
+		double val = Double.parseDouble(value);
+		NotesName notesName = new NotesName();
+		notesName.setCode(code);
+		notesName.setValue(val);
+		notesName.setCountry(country);
+		notesNameServices.addOrUpdateNotesName(notesName);
+		model.addAttribute("countryID", cID);
+		return "addNotesName";
+	}
+	
+	@RequestMapping(value = "/addNotesNameDone")
+	public String addNotesNameDone(@RequestParam("countryId") String str,@RequestParam("code") String code,@RequestParam("value") String value,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+			
+			int cID = Integer.parseInt(str);
+			Country country = countryServices.getCountryById(cID);
+			System.out.println("country:"+country.getId());
+			NotesName notesName = new NotesName();
+			notesName.setCode(code);
+			notesName.setCountry(country);
+			double val = Double.parseDouble(value);
+			notesName.setValue(val);
+			
+			notesNameServices.addOrUpdateNotesName(notesName);
+		
+		Set<TokensName> tokensNameList= tokensNameServices.getTokensNameList();
+		model.addAttribute(new TokensNameValueForm());
+		model.addAttribute("tokensNameList", tokensNameList);
+		model.addAttribute("countryID", cID);
+		model.addAttribute("currency", country.getCurrency());
+		return "tokensNameValueList";
+			
+	}
+	
+	@RequestMapping("/tokensNameValue")
+	public String tokensNameValueList(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		String[] codes = request.getParameterValues("code");
+		String[] values = request.getParameterValues("value");
+		String[] tokensNameIds = request.getParameterValues("tokensNameId");
+		String countryID = request.getParameter("countryID");
+		
+		//double[] valueDouble = null;
+		
+		//TokensName[] tnList = null;
+		
+		List<Double> valueDouble = new ArrayList<Double>();
+		List<TokensName> tnList = new ArrayList<TokensName>();
+		for (String string : codes) {
+			System.out.println("code:"+string);
+		}
+		for (int i = 0; i < values.length; i++) {
+			System.out.println("values[i]:"+values[i]);
+			double val = Double.parseDouble(values[i]);
+			valueDouble.add(val);
+		}
+		for (int i = 0; i < tokensNameIds.length; i++) {
+			long id = Long.parseLong(tokensNameIds[i]);
+			TokensName tn = tokensNameServices.getTokensNameById(id);
+			tnList.add(tn);
+		}
+		
+		for (String string : tokensNameIds) {
+			System.out.println("tokensNameId:"+string);
+		}
+		System.out.println("countryID:"+countryID);
+		long cID = Long.parseLong(countryID);
+		Country country = countryServices.getCountryById(cID);
+		
+		for (int i = 0; i < tnList.size(); i++) {
+			TokensNameValue tnv = new TokensNameValue();
+			tnv.setCode(codes[i]);
+			tnv.setCountry(country);
+			tnv.setTokensName(tnList.get(i));
+			tnv.setValue(valueDouble.get(i));
+			tokensNameValueServices.addOrUpdateTokensNameValue(tnv);
+		}
+		
+		Set<BillsName> billsNameList= billsNameServices.getBillsNameList();
+		model.addAttribute("billsNameList", billsNameList);
+		model.addAttribute("countryID", cID);
+		model.addAttribute("currency", country.getCurrency());
+		return "billsNameValueList";
+	}
+	
+	@RequestMapping("/billsNameValue")
+	public String billsNameValueList(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		String[] codes = request.getParameterValues("code");
+		String[] values = request.getParameterValues("value");
+		String[] tokensNameIds = request.getParameterValues("billsNameId");
+		String countryID = request.getParameter("countryID");
+		
+		
+		List<Double> valueDouble = new ArrayList<Double>();
+		List<BillsName> bnList = new ArrayList<BillsName>();
+		for (String string : codes) {
+			System.out.println("code:"+string);
+		}
+		for (int i = 0; i < values.length; i++) {
+			System.out.println("values[i]:"+values[i]);
+			double val = Double.parseDouble(values[i]);
+			valueDouble.add(val);
+		}
+		for (int i = 0; i < tokensNameIds.length; i++) {
+			long id = Long.parseLong(tokensNameIds[i]);
+			BillsName tn = billsNameServices.getBillsNameById(id);
+			bnList.add(tn);
+		}
+		
+		for (String string : tokensNameIds) {
+			System.out.println("tokensNameId:"+string);
+		}
+		System.out.println("countryID:"+countryID);
+		long cID = Long.parseLong(countryID);
+		Country country = countryServices.getCountryById(cID);
+		
+		for (int i = 0; i < bnList.size(); i++) {
+			BillsNameValue bnv = new BillsNameValue();
+			bnv.setCode(codes[i]);
+			bnv.setCountry(country);
+			bnv.setBillsName(bnList.get(i));
+			bnv.setValue(valueDouble.get(i));
+			billsNameValueServices.addOrUpdateBillsNameValue(bnv);
+		}
+		
 		Set<Country> countryList= countryServices.getCountryList();
 		model.addAttribute("countryActive", "countryActive");
 		model.addAttribute(new Country());
 		model.addAttribute("countryList", countryList);
 		return "countryList";
 	}
-
-	
 	
 	@RequestMapping(value = "/deleteCountryList")
 	public String deleteCountry(@RequestParam("list") String str,HttpServletRequest request,HttpServletResponse response,ModelMap model){
@@ -594,7 +819,7 @@ public class AdminController {
 				cvt.setMachineType(mt);
 				coinValidatorTypeServices.addOrUpdateCoinValidatorType(cvt);
 				CoinsType ct = new CoinsType();
-				ct.setCoinValidatorType(cvt);
+				//ct.setCoinValidatorType(cvt);
 				coinsTypeServices.addOrUpdateCoinsType(ct);
 				
 			}
@@ -610,7 +835,7 @@ public class AdminController {
 				bvt.setMachineType(mt);
 				billValidatorTypeServices.addOrUpdateBillValidatorType(bvt);
 				BillsType bt = new BillsType();
-				bt.setBillValidatorType(bvt);
+			//	bt.setBillValidatorType(bvt);
 				billsTypeServices.addOrUpdateBillsType(bt);
 			}
 			isBV = true;
@@ -640,8 +865,9 @@ public class AdminController {
 	public String hopperTypeConfig(HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		String action = null;
 		long mvId = 0;
-		boolean isCoins = false;
-		boolean isTokens = false;
+		boolean isSingle = false;
+		boolean isMulti = false;
+		HopperType ht = null;
 		if(request.getParameter("action")!=null){
 			action=request.getParameter("action");
 		}
@@ -649,40 +875,50 @@ public class AdminController {
 			String[] valueType=request.getParameterValues("valueType");
 			
 			if(valueType[0] != null){
-				if(valueType[0].equals("coin")){
+				if(valueType[0].equals("singleCoin")){
 					String mvIdStr = request.getParameter("mvid");
 					
 					 mvId = Long.parseLong(mvIdStr);
 					MachineType mt = machineTypeServices.getMachineTypeById(mvId);
 					Set<HopperType> htSet = hopperTypeServices.getHopperTypeByMachineId(mt.getId());
-					HopperType ht =null;
+					System.out.println("singleCoin");
+					 
 					for (HopperType hopperType : htSet) {
 						//check if hopper capacity is zero, means other details are remaining.
 						if(hopperType.getCapacity() == 0){
 							ht = hopperType;
 						}
 					}
-					CoinsType ct = new CoinsType();
-					ct.setHopperType(ht);
+					/*CoinsType ct = new CoinsType();
+					//ct.setHopperType(ht);
 					coinsTypeServices.addOrUpdateCoinsType(ct);
 					if(valueType.length >1){
 						if(valueType[1] != null){
 							if(valueType[1].equals("token")){
 								// add token for hopper 
 								TokensType tt = new TokensType();
-								tt.setHopperType(ht);
+							//	tt.setHopperType(ht);
 								tokensTypeServices.addOrUpdateTokensType(tt);
 							}
 						}
-					}
+					}*/
 									
-					isCoins = true;
-				}else if(valueType[0].equals("token")){
+					isSingle = true;
+				}else if(valueType[0].equals("multiCoin")){
 					String mvIdStr = request.getParameter("mvid");
 					
 					 mvId = Long.parseLong(mvIdStr);
 					MachineType mt = machineTypeServices.getMachineTypeById(mvId);
 					Set<HopperType> htSet = hopperTypeServices.getHopperTypeByMachineId(mt.getId());
+					System.out.println("singleCoin");
+					 
+					for (HopperType hopperType : htSet) {
+						//check if hopper capacity is zero, means other details are remaining.
+						if(hopperType.getCapacity() == 0){
+							ht = hopperType;
+						}
+					}
+					/*Set<HopperType> htSet = hopperTypeServices.getHopperTypeByMachineId(mt.getId());
 					HopperType ht =null;
 					for (HopperType hopperType : htSet) {
 						//check if hopper capacity is zero, means other details are remaining.
@@ -691,30 +927,558 @@ public class AdminController {
 						}
 					}
 					TokensType tt = new TokensType();
-					tt.setHopperType(ht);
-					tokensTypeServices.addOrUpdateTokensType(tt);
-					isTokens= true;
+					//tt.setHopperType(ht);
+					tokensTypeServices.addOrUpdateTokensType(tt);*/
+					isMulti= true;
 				}
 			}
 			
 			
 		}
-		if(isCoins){
-			CoinsType ct = new CoinsType();
-			ct = coinsTypeServices.getLastCoinsType();
-			model.addAttribute("ctid",ct.getId());
-			return "coinsValueInfo";
-		}else if(isTokens){
-			TokensType tt = new TokensType();
-			tt = tokensTypeServices.getLastTokensType();
-			model.addAttribute("ttid", tt.getId());
-			return "tokensValueInfo";
+		if(isSingle){
+			Set<Country> countrySet = countryServices.getCountryList();
+			List<Country> countryList = new ArrayList<Country>(countrySet);
+			
+			
+			
+			Country firstCountry = null;
+			Set<CoinsName> coinsNameSet = new HashSet<CoinsName>();
+			
+			for (Country country : countryList) {
+				
+				coinsNameSet = coinsNameServices.getCoinsNameByCountry(country.getId());
+				country.setDone(true);
+				countryServices.addOrUpdateCountry(country);
+				if(coinsNameSet != null){
+					firstCountry = country;
+					break;
+				}
+			}
+			 
+			for (CoinsName coinsName : coinsNameSet) {
+				System.out.println("coinsName:"+coinsName.getCode() + "\t"+coinsName.getValue());
+			}
+			
+			List<CoinsName> coinsNameList = new ArrayList<CoinsName>(coinsNameSet);
+			Map< String, String > coins = new HashMap<String, String>();  
+			for (CoinsName coinssName : coinsNameList) {
+				coins.put(String.valueOf(coinssName.getId()) , String.valueOf(coinssName.getValue()));
+			}
+			model.addAttribute("country", firstCountry);
+			model.addAttribute("coinsNameSet", coins);
+			model.addAttribute("hopperType", ht);
+			model.addAttribute("isSingle", "yes");
+			model.addAttribute(new CoinsNameForm());
+			ht.setSingleCoin(true);
+			hopperTypeServices.addOrUpdateHopperType(ht);
+			return "addCountryCoinsValue";
+		}else if(isMulti){
+			Set<Country> countrySet = countryServices.getCountryList();
+			List<Country> countryList = new ArrayList<Country>(countrySet);
+			
+			
+			
+			Country firstCountry = null;
+			Set<CoinsName> coinsNameSet = new HashSet<CoinsName>();
+			
+			for (Country country : countryList) {
+				
+				coinsNameSet = coinsNameServices.getCoinsNameByCountry(country.getId());
+				country.setDone(true);
+				countryServices.addOrUpdateCountry(country);
+				if(coinsNameSet != null){
+					firstCountry = country;
+					break;
+				}
+			}
+			 
+			for (CoinsName coinsName : coinsNameSet) {
+				System.out.println("coinsName:"+coinsName.getCode() + "\t"+coinsName.getValue());
+			}
+			List<CoinsName> coinsNameList = new ArrayList<CoinsName>(coinsNameSet);
+			Map< String, String > coins = new HashMap<String, String>();  
+			for (CoinsName coinssName : coinsNameList) {
+				coins.put(String.valueOf(coinssName.getId()) , String.valueOf(coinssName.getValue()));
+			}
+			model.addAttribute("country", firstCountry);
+			model.addAttribute("coinsNameSet", coins);
+			model.addAttribute("hopperType", ht);
+			model.addAttribute("isSingle", "no");
+			model.addAttribute(new CoinsNameForm());
+			ht.setSingleCoin(false);
+			hopperTypeServices.addOrUpdateHopperType(ht);
+			return "addCountryCoinsValue";
 		}else{
 			return null;
 		}
+		
 	}
 	
 	
+	@RequestMapping(value="/addCountryCoinsValue", method=RequestMethod.POST)
+	public String addCountryCoinsValue(@ModelAttribute("coinsNameForm") CoinsNameForm coinsNameForm,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		String action = request.getParameter("action");
+		if(action.equals("addHopper")){
+		
+			System.out.println("htid:"+request.getParameter("htid"));
+			String[] coinsNameSet=request.getParameterValues("ids");
+			for (String string : coinsNameSet) {
+				System.out.println("coinsName:"+string);
+			}
+			
+			
+			HopperType ht = hopperTypeServices.getHopperTypeById(Long.parseLong(request.getParameter("htid")));
+			Country country = countryServices.getCountryById(Long.parseLong(request.getParameter("countryID")));
+			
+			for (int i = 0; i < coinsNameSet.length; i++) {
+				CountryCoinsValue ccv = new CountryCoinsValue();
+				CoinsName cn = coinsNameServices.getCoinsNameById(Long.parseLong(coinsNameSet[i]));
+				ccv.setCoinsName(cn);
+				ccv.setHopperType(ht);
+				countryCoinsValueServices.addOrUpdateCountryCoinsValue(ccv);
+				
+			}
+			
+			
+			
+			
+			Set<Country> countrySet = countryServices.getCountryList();
+			Set<CoinsName> coinsNames = new HashSet<CoinsName>();
+			Country firstCountry = null;
+			for (Country country2 : countrySet) {
+				if(!country2.isDone()){
+				
+					coinsNames = coinsNameServices.getCoinsNameByCountry(country2.getId());
+					country2.setDone(true);
+					countryServices.addOrUpdateCountry(country2);
+					if(coinsNames != null){
+						
+						firstCountry = country2;
+						break;
+					}
+				}
+			}
+			
+			if(firstCountry != null){
+				model.addAttribute("country", firstCountry);
+				
+				List<CoinsName> coinsNameList = new ArrayList<CoinsName>(coinsNames);
+				Map< String, String > coins = new HashMap<String, String>();  
+				for (CoinsName coinssName : coinsNameList) {
+					coins.put(String.valueOf(coinssName.getId()) , String.valueOf(coinssName.getValue()));
+				}
+				
+				model.addAttribute("coinsNameSet", coins);
+				
+				model.addAttribute("hopperType", ht);
+				boolean isSingle = ht.isSingleCoin();
+				if(isSingle){
+					model.addAttribute("isSingle", "yes");
+				}else{
+					model.addAttribute("isSingle", "no");
+				}
+				model.addAttribute(new CoinsNameForm());
+				return "addCountryCoinsValue";
+			}else{
+				
+				Set<Country> cSet = countryServices.getCountryList();
+				for (Country country2 : cSet) {
+					country2.setDone(false);
+					countryServices.addOrUpdateCountry(country2);
+				}
+				
+				Country countryFirst = null;
+				Set<NotesName> notesNameSet = new HashSet<NotesName>();
+				
+				for (Country c : cSet) {
+					
+					notesNameSet = notesNameServices.getNotesNameByCountry(c.getId());
+					c.setDone(true);
+					countryServices.addOrUpdateCountry(country);
+					if(notesNameSet != null){
+						countryFirst = country;
+						break;
+					}
+				}
+				
+				List<NotesName> notesNameList = new ArrayList<NotesName>(notesNameSet);
+				
+				 Map< String, String > notes = new HashMap<String, String>();  
+				for (NotesName notesName : notesNameList) {
+					notes.put(String.valueOf(notesName.getId()) , String.valueOf(notesName.getValue()));
+				}
+				
+				
+				model.addAttribute("country", countryFirst);
+				model.addAttribute("notesNameSet", notes);
+				model.addAttribute("hopperType", ht);
+				
+				
+				model.addAttribute(new NotesNameForm());
+				return "addCountryNotesValue";
+			}
+		}else if(action.equals("addCoinValidator")){
+			System.out.println("cvtid:"+request.getParameter("cvtid"));
+			String[] coinsNameSet=request.getParameterValues("ids");
+			for (String string : coinsNameSet) {
+				System.out.println("coinsName:"+string);
+			}
+			
+			
+			
+			CoinValidatorType cvt = coinValidatorTypeServices.getCoinValidatorTypeById(Long.parseLong(request.getParameter("cvtid")));
+			Country country = countryServices.getCountryById(Long.parseLong(request.getParameter("countryID")));
+			
+			for (int i = 0; i < coinsNameSet.length; i++) {
+				CountryCoinsValue ccv = new CountryCoinsValue();
+				CoinsName cn = coinsNameServices.getCoinsNameById(Long.parseLong(coinsNameSet[i]));
+				ccv.setCoinsName(cn);
+				ccv.setCoinValidatorType(cvt);
+				countryCoinsValueServices.addOrUpdateCountryCoinsValue(ccv);
+				
+			}
+			
+			Set<Country> countrySet = countryServices.getCountryList();
+			Set<CoinsName> coinsNames = new HashSet<CoinsName>();
+			Country firstCountry = null;
+			for (Country country2 : countrySet) {
+				if(!country2.isDone()){
+				
+					coinsNames = coinsNameServices.getCoinsNameByCountry(country2.getId());
+					country2.setDone(true);
+					countryServices.addOrUpdateCountry(country2);
+					if(coinsNames != null){
+						
+						firstCountry = country2;
+						break;
+					}
+				}
+			}
+			
+			if(firstCountry != null){
+				model.addAttribute("country", firstCountry);
+				
+				List<CoinsName> coinsNameList = new ArrayList<CoinsName>(coinsNames);
+				Map< String, String > coins = new HashMap<String, String>();  
+				for (CoinsName coinssName : coinsNameList) {
+					coins.put(String.valueOf(coinssName.getId()) , String.valueOf(coinssName.getValue()));
+				}
+				
+				model.addAttribute("coinsNameSet", coins);
+				
+				model.addAttribute("coinValidatorType", cvt);
+				
+				model.addAttribute("isCoinValidator", "yes");
+				model.addAttribute(new CoinsNameForm());
+				return "addCountryCoinsValue";
+			}else{
+				Set<Country> cSet = countryServices.getCountryList();
+				for (Country country2 : cSet) {
+					country2.setDone(false);
+					countryServices.addOrUpdateCountry(country2);
+				}
+				model.addAttribute("coinValidatorTypeId", cvt.getId());
+				return "addCoinValidatorCapacity";
+			}
+		}else{
+			return null;
+		}
+		
+	}
+	
+	@RequestMapping(value="/addCountryNotesValue", method=RequestMethod.POST)
+	public String addCountryNotesValue(@ModelAttribute("notesNameForm") NotesNameForm notesNameForm,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		System.out.println("htid:"+request.getParameter("htid"));
+		String[] notesIds=request.getParameterValues("ids");
+		
+		
+		for (String string : notesIds) {
+			System.out.println("notesName:"+string);
+		}
+		
+		
+		HopperType ht = hopperTypeServices.getHopperTypeById(Long.parseLong(request.getParameter("htid")));
+		Country country = countryServices.getCountryById(Long.parseLong(request.getParameter("countryID")));
+		
+		for (int i = 0; i < notesIds.length; i++) {
+			CountryNotesValue cnv = new CountryNotesValue();
+			NotesName nn = notesNameServices.getNotesNameById(Long.parseLong(notesIds[i]));
+			cnv.setNotesName(nn);
+			cnv.setHopperType(ht);
+			countryNotesValueServices.addOrUpdateCountryNotesValue(cnv);
+		}
+		
+		Set<Country> countrySet = countryServices.getCountryList();
+		Set<NotesName> notesNames = new HashSet<NotesName>();;
+		Country firstCountry = null;
+		for (Country country2 : countrySet) {
+			if(!country2.isDone()){
+			
+				notesNames = notesNameServices.getNotesNameByCountry(country2.getId());
+				country2.setDone(true);
+				countryServices.addOrUpdateCountry(country2);
+				if(notesNames != null){
+					
+					firstCountry = country2;
+					break;
+				}
+			}
+		}
+		
+		if(firstCountry != null){
+			model.addAttribute("country", firstCountry);
+			
+			model.addAttribute("hopperType", ht);
+			List<NotesName> notesNameList = new ArrayList<NotesName>(notesNames);
+			
+			 Map< String, String > notes = new HashMap<String, String>();  
+			for (NotesName notesName : notesNameList) {
+				notes.put(String.valueOf(notesName.getId()) , String.valueOf(notesName.getValue()));
+			}
+			model.addAttribute(new NotesName());
+			model.addAttribute("notesNameSet", notes);
+			return "addCountryNotesValue";
+		}else{
+			Set<Country> cSet = countryServices.getCountryList();
+			for (Country country2 : cSet) {
+				country2.setDone(false);
+				countryServices.addOrUpdateCountry(country2);
+			}
+			Country countryFirst = null;
+			Set<TokensNameValue> tokensNameValueSet = new HashSet<TokensNameValue>();
+			
+			
+			
+			for (Country c : cSet) {
+				
+				tokensNameValueSet = tokensNameValueServices.getTokensNameValueByCountry(c.getId());
+				
+				c.setDone(true);
+				countryServices.addOrUpdateCountry(country);
+				if(tokensNameValueSet != null){
+					countryFirst = country;
+					break;
+				}
+			}
+			List<TokensNameValue> tokensNameValueList = new ArrayList<TokensNameValue>(tokensNameValueSet);
+			List<TokensName> tokensNameList = new ArrayList<TokensName>();
+			for (int i = 0; i < tokensNameValueList.size(); i++) {
+				System.out.println("token name:"+tokensNameValueList.get(i).getTokensName().getName());
+				tokensNameList.add(tokensNameValueList.get(i).getTokensName());
+			}
+			 Map< String, String > tokens = new HashMap<String, String>();  
+				for (TokensName tokensName : tokensNameList) {
+					tokens.put(String.valueOf(tokensName.getId()) , String.valueOf(tokensName.getName()));
+				}
+			model.addAttribute("country", countryFirst);
+			model.addAttribute("tokensNameList", tokens);
+			model.addAttribute("hopperType", ht);
+			
+			model.addAttribute(new TokensNameForm());
+			
+			return "addCountryTokensValue";
+		}
+		
+		
+		
+	}
+	
+	@RequestMapping(value="/addCountryTokensValue", method=RequestMethod.POST)
+	public String addCountryTokensValue(@ModelAttribute("tokensNameForm") TokensNameForm tokensNameForm,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		System.out.println("htid:"+request.getParameter("htid"));
+		String[] tokensNameSet=request.getParameterValues("ids");
+		for (String string : tokensNameSet) {
+			System.out.println("tokensName:"+string);
+		}
+		
+		
+		HopperType ht = hopperTypeServices.getHopperTypeById(Long.parseLong(request.getParameter("htid")));
+		Country country = countryServices.getCountryById(Long.parseLong(request.getParameter("countryID")));
+		
+		for (int i = 0; i < tokensNameSet.length; i++) {
+			CountryTokensValue ctv = new CountryTokensValue();
+			TokensName tn = tokensNameServices.getTokensNameById(Long.parseLong(tokensNameSet[i]));
+			TokensNameValue tnv = tokensNameValueServices.getTokensNameValueByCountryAndTokensName(country.getId(), tn.getId());
+			ctv.setHopperType(ht);
+			ctv.setTokensNameValue(tnv);
+			countryTokensValueServices.addOrUpdateCountryTokensValue(ctv);
+		}
+		
+		Set<Country> countrySet = countryServices.getCountryList();
+		Set<TokensNameValue> tokensNameValue = new HashSet<TokensNameValue>();
+		Country firstCountry = null;
+		for (Country country2 : countrySet) {
+			if(!country2.isDone()){
+			
+				tokensNameValue = tokensNameValueServices.getTokensNameValueByCountry(country2.getId());
+				country2.setDone(true);
+				countryServices.addOrUpdateCountry(country2);
+				if(tokensNameValue != null){
+					
+					firstCountry = country2;
+					break;
+				}
+			}
+		}
+		List<TokensName> tokensNameList = new ArrayList<TokensName>();
+		List<TokensNameValue> tokensNameValueList = new ArrayList<TokensNameValue>(tokensNameValue);
+		for (int i = 0; i < tokensNameValue.size(); i++) {
+			tokensNameList.add(tokensNameValueList.get(i).getTokensName());
+		}
+		if(firstCountry != null){
+			Map< String, String > tokens = new HashMap<String, String>();  
+			for (TokensName tokensName : tokensNameList) {
+				tokens.put(String.valueOf(tokensName.getId()) , String.valueOf(tokensName.getName()));
+			}
+		model.addAttribute("country", firstCountry);
+		model.addAttribute("tokensNameList", tokens);
+		model.addAttribute("hopperType", ht);
+		
+		model.addAttribute(new TokensNameForm());
+		
+		return "addCountryTokensValue";
+		}else{
+			for (Country country2 : countrySet) {
+				country2.setDone(false);
+				countryServices.addOrUpdateCountry(country2);
+			}
+			model.addAttribute("hopperTypeId", ht.getId());
+			return "addHopperCapacity";
+		}
+		
+		
+	}
+	
+	
+	
+	
+	@RequestMapping(value="/billValidatorTypeConfig", method=RequestMethod.POST)
+	public String billValidatorTypeConfig(HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		Set<Country> countryList=countryServices.getCountryList();
+		for (Country country2 : countryList) {
+			country2.setDone(false);
+			countryServices.addOrUpdateCountry(country2);
+		}
+		
+		Country firstCountry = null;
+		Set<BillsNameValue> billsNameValueSet = new HashSet<BillsNameValue>();
+		
+		for (Country country : countryList) {
+			
+			billsNameValueSet = billsNameValueServices.getBillsNameValueByCountry(country.getId());
+			country.setDone(true);
+			countryServices.addOrUpdateCountry(country);
+			if(billsNameValueSet != null){
+				firstCountry = country;
+				break;
+			}
+		}
+		
+		List<BillsName> billsNameList = new ArrayList<BillsName>();
+		List<BillsNameValue> billsNameValueList = new ArrayList<BillsNameValue>(billsNameValueSet);
+		for (int i = 0; i < billsNameValueList.size(); i++) {
+			billsNameList.add(billsNameValueList.get(i).getBillsName());
+		}
+		
+		Map< String, String > bills = new HashMap<String, String>();  
+		for (BillsName billsName : billsNameList) {
+			bills.put(String.valueOf(billsName.getId()) , String.valueOf(billsName.getName()));
+		}
+			
+		
+		
+		MachineType mt = machineTypeServices.getMachineTypeById(Long.parseLong(request.getParameter("mvid")));
+	
+		BillValidatorType bvt = new BillValidatorType();
+		bvt.setMachineType(mt);
+		
+		if(request.getParameter("mvid").equals("input")){
+			bvt.setOnlyInput(true);
+		}else{
+			bvt.setOnlyInput(false);
+		}
+		billValidatorTypeServices.addOrUpdateBillValidatorType(bvt);
+		
+		BillValidatorType bvtLast = billValidatorTypeServices.getLastBillValidatorType();
+		
+		model.addAttribute("country", firstCountry);
+		model.addAttribute("billsNameList", bills);
+		model.addAttribute("billValidatorType", bvtLast);
+		
+		model.addAttribute(new BillsNameForm());
+		
+		return "addCountryBillsValue";
+	}
+	
+	
+	
+	@RequestMapping(value="/addCountryBillsValue", method=RequestMethod.POST)
+	public String addCountryBillsValue(@ModelAttribute("billsNameForm") BillsNameForm billsNameForm,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+	
+		System.out.println("bvtid:"+request.getParameter("bvtid"));
+		String[] billsNameSet=request.getParameterValues("ids");
+		for (String string : billsNameSet) {
+			System.out.println("billsName:"+string);
+		}
+		
+		
+		
+		BillValidatorType bvt = billValidatorTypeServices.getBillValidatorTypeById(Long.parseLong(request.getParameter("bvtid")));
+		Country country = countryServices.getCountryById(Long.parseLong(request.getParameter("countryID")));
+		
+		for (int i = 0; i < billsNameSet.length; i++) {
+			CountryBillsValue cbv = new CountryBillsValue();
+			BillsName bn = billsNameServices.getBillsNameById(Long.parseLong(billsNameSet[i]));
+			BillsNameValue bnv = billsNameValueServices.getBillsNameValueByCountryAndBillsName(country.getId(), bn.getId());
+			
+			cbv.setBillValidatorType(bvt);
+			cbv.setBillsNameValue(bnv);
+			countryBillsValueServices.addOrUpdateCountryBillsValue(cbv);
+			
+		}
+		
+		Set<Country> countrySet = countryServices.getCountryList();
+		Set<BillsNameValue> billsNameValue = new HashSet<BillsNameValue>();
+		Country firstCountry = null;
+		for (Country country2 : countrySet) {
+			if(!country2.isDone()){
+			
+				billsNameValue = billsNameValueServices.getBillsNameValueByCountry(country2.getId());
+				country2.setDone(true);
+				countryServices.addOrUpdateCountry(country2);
+				if(billsNameValue != null){
+					
+					firstCountry = country2;
+					break;
+				}
+			}
+		}
+		List<BillsName> billsNameList = new ArrayList<BillsName>();
+		List<BillsNameValue> billsNameValueList = new ArrayList<BillsNameValue>(billsNameValue);
+		for (int i = 0; i < billsNameValueList.size(); i++) {
+			billsNameList.add(billsNameValueList.get(i).getBillsName());
+		}
+		if(firstCountry != null){
+			Map< String, String > bills = new HashMap<String, String>();  
+			for (BillsName billsName : billsNameList) {
+				bills.put(String.valueOf(billsName.getId()) , String.valueOf(billsName.getName()));
+			}
+		model.addAttribute("country", firstCountry);
+		model.addAttribute("billsNameList", bills);
+		model.addAttribute("billValidatorType", bvt);
+		
+		model.addAttribute(new BillsNameForm());
+		
+		return "addCountryBillsValue";
+		}else{
+			model.addAttribute("billValidatorTypeId", bvt.getId());
+			return "addBillValidatorCapacity";
+		}
+	}
 	@RequestMapping(value="/coinsValueInfo", method=RequestMethod.POST)
 	public String coinsValueInfo(HttpServletRequest request,HttpServletResponse response,ModelMap model){
 		String action = null;
@@ -784,10 +1548,10 @@ public class AdminController {
 		
 		for (int j2 = 0; j2 < countryValuesForCoin.length; j2++) {
 			CountryCoinsValue ccv = new CountryCoinsValue();
-			ccv.setCoinsValue(coinsValue);
+			//ccv.setCoinsValue(coinsValue);
 			Country country = countryServices.getCountryById(countryIds[j2]);
-			ccv.setCountry(country);
-			ccv.setValue(countryValuesForCoin[j2]);
+			//ccv.setCountry(country);
+			//ccv.setValue(countryValuesForCoin[j2]);
 			countryCoinsValueServices.addOrUpdateCountryCoinsValue(ccv);
 		}
 		coinsValue.setDone(true);
@@ -812,7 +1576,7 @@ public class AdminController {
 			CoinsType ct = coinsTypeServices.getCoinsTypeById(ctid);
 			System.out.println("coin Type:"+ct.getId());
 			
-			if(ct.getHopperType() != null){
+			/*if(ct.getHopperType() != null){
 				System.out.println("hopper typr in coin type:"+ ct.getHopperType().getId());
 				TokensType tt = tokensTypeServices.getTokensTypeByHopperType(ct.getHopperType().getId());
 				
@@ -829,7 +1593,8 @@ public class AdminController {
 			}else{
 				model.addAttribute("coinValidatorTypeId", ct.getCoinValidatorType().getId());
 				return "addCoinValidatorCapacity";
-			}
+			}*/
+			return null;
 		}
 	}
 	
@@ -906,10 +1671,10 @@ public class AdminController {
 		for (int j2 = 0; j2 < countryValuesForCoin.length; j2++) {
 			
 			CountryTokensValue ctv = new CountryTokensValue();
-			ctv.setTokensValue(tokensValue);
+		//	ctv.setTokensValue(tokensValue);
 			Country country = countryServices.getCountryById(countryIds[j2]);
-			ctv.setCountry(country);
-			ctv.setValue(countryValuesForCoin[j2]);
+			//ctv.setCountry(country);
+			//ctv.setValue(countryValuesForCoin[j2]);
 			countryTokensValueServices.addOrUpdateCountryTokensValue(ctv);
 		}
 		tokensValue.setDone(true);
@@ -933,7 +1698,7 @@ public class AdminController {
 		return "countryTokenValueInfo";
 		}else{
 			TokensType tt = tokensTypeServices.getTokensTypeById(ttid);
-			model.addAttribute("hopperTypeId", tt.getHopperType().getId());
+			//model.addAttribute("hopperTypeId", tt.getHopperType().getId());
 			return "addHopperCapacity";
 		}
 	}
@@ -976,12 +1741,53 @@ public class AdminController {
 					bv = "billValidator";
 				}
 			}
-			model.addAttribute("mvid",mvId);
-			model.addAttribute("hopper", hopper);
-			model.addAttribute("csv", csv);
-			model.addAttribute("bv", bv);
-			return "paymentDevice";
+			
+			
+			if(csv != null){
+				Set<Country> countryList=countryServices.getCountryList();
+				
+				Country firstCountry = null;
+				Set<CoinsName> coinsNameSet = new HashSet<CoinsName>();
+				
+				for (Country country : countryList) {
+					
+					coinsNameSet = coinsNameServices.getCoinsNameByCountry(country.getId());
+					country.setDone(true);
+					countryServices.addOrUpdateCountry(country);
+					if(coinsNameSet != null){
+						firstCountry = country;
+						break;
+					}
+				}
+				MachineType mt = ht.getMachineType();
+				CoinValidatorType cvt = new CoinValidatorType();
+				cvt.setMachineType(mt);
+				coinValidatorTypeServices.addOrUpdateCoinValidatorType(cvt);
+				
+				
+				List<CoinsName> coinsNameList = new ArrayList<CoinsName>(coinsNameSet);
+				Map< String, String > coins = new HashMap<String, String>();  
+				for (CoinsName coinssName : coinsNameList) {
+					coins.put(String.valueOf(coinssName.getId()) , String.valueOf(coinssName.getValue()));
+				}
+				
+				CoinValidatorType cvtLast = coinValidatorTypeServices.getLastCoinValidatorType();
+				
+				model.addAttribute("country", firstCountry);
+				model.addAttribute("coinsNameSet", coins);
+				model.addAttribute("coinValidatorType", cvtLast);
+				model.addAttribute(new CoinsNameForm());
+				model.addAttribute("isCoinValidator", "yes");
+				
+				return "addCountryCoinsValue";
+				
+			}else if(bv!=null){
+				return null;
+			}else{
+				return null;
 			}
+		}
+			
 		}
 		
 	
@@ -1026,7 +1832,7 @@ public class AdminController {
 			model.addAttribute("ctid",ct.getId());
 			return  "coinsValueInfo";
 		}else{
-			for (int i = 0; i < cvt.getMachineType().getPaymentDevices().length; i++) {
+			/*for (int i = 0; i < cvt.getMachineType().getPaymentDevices().length; i++) {
 				
 				if(cvt.getMachineType().getPaymentDevices()[i].equals("BillValidator")){
 					bv = "billValidator";
@@ -1036,7 +1842,10 @@ public class AdminController {
 			model.addAttribute("hopper", hopper);
 			model.addAttribute("csv", csv);
 			model.addAttribute("bv", bv);
-			return "paymentDevice";
+			return "paymentDevice";*/
+			
+			model.addAttribute("mvid", mvId);
+			return "billValidatorTypeInfo";
 			}
 		}
 	
@@ -1112,10 +1921,10 @@ public class AdminController {
 			
 			CountryBillsValue cbv = new CountryBillsValue();
 			
-			cbv.setBillsValue(billsValue);
+		//	cbv.setBillsValue(billsValue);
 			Country country = countryServices.getCountryById(countryIds[j2]);
-			cbv.setCountry(country);
-			cbv.setValue(countryValuesForCoin[j2]);
+			//cbv.setCountry(country);
+			//cbv.setValue(countryValuesForCoin[j2]);
 			
 			countryBillsValueServices.addOrUpdateCountryBillsValue(cbv);
 		}
@@ -1138,7 +1947,7 @@ public class AdminController {
 		}else{
 			
 				BillsType bt = billsTypeServices.getBillsTypeById(btid);
-				model.addAttribute("billValidatorTypeId", bt.getBillValidatorType().getId());
+				//model.addAttribute("billValidatorTypeId", bt.getBillValidatorType().getId());
 				return "addBillValidatorCapacity";
 			}
 		}
@@ -1163,6 +1972,12 @@ public class AdminController {
 		
 		
 		billValidatorTypeServices.addOrUpdateBillValidatorType(bvt);
+		Set<Country> countrySet = countryServices.getCountryList();
+		for (Country country : countrySet) {
+			country.setDone(false);
+			countryServices.addOrUpdateCountry(country);
+		}
+		
 		long mvId = bvt.getMachineType().getId();
 		
 		
@@ -1211,6 +2026,113 @@ public class AdminController {
 		return "machineTypeList";
 		
 	}
+	
+	@RequestMapping("/tokens")
+	public String tokens(@ModelAttribute("tokensName") TokensName tokensName,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		String action="action";
+		
+		if(request.getParameter("action")!=null){
+			action=request.getParameter("action");
+		}
+		
+		System.out.println("Action: "+action);
+		if(action!=null){
+			if(action.equals("add")){
+				if(tokensNameServices.addOrUpdateTokensName(tokensName)){
+					System.out.println("add tokens name");
+				}
+			}else if(action.equals("edit")){
+				TokensName tn= tokensNameServices.getTokensNameById(tokensName.getId());
+				
+				tn.setName(tokensName.getName());
+				
+				if(tokensNameServices.addOrUpdateTokensName(tn)){
+					System.out.println("tokens edited");
+				}
+			}
+		}
+		
+		Set<TokensName> tokensNameList= tokensNameServices.getTokensNameList();
+		
+		model.addAttribute(new TokensName());
+		model.addAttribute("tokensNameList", tokensNameList);
+
+		return "tokenList";
+	}
+	
+	@RequestMapping(value = "/deleteTokensList")
+	public String deleteTokensList(@RequestParam("list") String str,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		str = str.substring(0, str.length()-1);
+		System.out.println(str);
+		String[] str1 = str.split(",");
+		
+		for (int i = 0; i < str1.length; i++) {
+			
+			int id = Integer.parseInt(str1[i]);
+			tokensNameServices.deleteTokensName(id);
+		
+		}
+		
+		Set<TokensName> tokensNameList= tokensNameServices.getTokensNameList();
+		model.addAttribute(new TokensName());
+		model.addAttribute("tokensNameList", tokensNameList);
+		return "tokenList";
+	}
+	
+	@RequestMapping("/bills")
+	public String bills(@ModelAttribute("billsName") BillsName billsName,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		
+		String action="action";
+		
+		if(request.getParameter("action")!=null){
+			action=request.getParameter("action");
+		}
+		
+		System.out.println("Action: "+action);
+		if(action!=null){
+			if(action.equals("add")){
+				if(billsNameServices.addOrUpdateBillsName(billsName)){
+					System.out.println("add bills name");
+				}
+			}else if(action.equals("edit")){
+				BillsName bn = billsNameServices.getBillsNameById(billsName.getId());
+				
+				bn.setName(billsName.getName());
+				
+				if(billsNameServices.addOrUpdateBillsName(bn)){
+					System.out.println("bills edited");
+				}
+			}
+		}
+		
+		Set<BillsName> billsNameList= billsNameServices.getBillsNameList();
+		
+		model.addAttribute(new BillsName());
+		model.addAttribute("billsNameList", billsNameList);
+
+		return "billList";
+	}
+
+	@RequestMapping(value = "/deleteBillsList")
+	public String deleteBillsList(@RequestParam("list") String str,HttpServletRequest request,HttpServletResponse response,ModelMap model){
+		str = str.substring(0, str.length()-1);
+		System.out.println(str);
+		String[] str1 = str.split(",");
+		
+		for (int i = 0; i < str1.length; i++) {
+			
+			int id = Integer.parseInt(str1[i]);
+			billsNameServices.deleteBillsName(id);
+		
+		}
+		
+		Set<BillsName> billsNameList= billsNameServices.getBillsNameList();
+		model.addAttribute(new BillsName());
+		model.addAttribute("billsNameList", billsNameList);
+		return "billList";
+	}
+	
 	public HashMap<String, Long> getMachineTypeMap() {    
 	    return machineTypeMap;
 	}

@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spanish.english.form.Country;
+import com.spanish.english.form.TokensType;
 
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class CountryDaoImpl implements CountryDao{
@@ -91,6 +92,15 @@ public class CountryDaoImpl implements CountryDao{
 			e.printStackTrace();
 		}
 		return flag;
+	}
+
+	@Override
+	public Country getLastCountry() {
+		Session session=sessionFactory.openSession();
+		Country result = (Country) session.createQuery("from Country ORDER BY id DESC")
+                .setMaxResults(1)
+                .uniqueResult();
+		return result;
 	}
 
 }

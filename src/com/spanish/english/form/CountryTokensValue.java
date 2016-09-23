@@ -26,13 +26,19 @@ public class CountryTokensValue implements Serializable{
 	@Column(name = "id")
 	private long id;
 	
-	private double value;
+	/*private double value;
 	
 	@ManyToOne
 	TokensValue tokensValue;
 	
 	@ManyToOne
-	Country country;
+	Country country;*/
+	
+	@ManyToOne
+	TokensNameValue tokensNameValue;
+	
+	@ManyToOne
+	HopperType hopperType;
 
 	public long getId() {
 		return id;
@@ -42,7 +48,23 @@ public class CountryTokensValue implements Serializable{
 		this.id = id;
 	}
 
-	public double getValue() {
+	public TokensNameValue getTokensNameValue() {
+		return tokensNameValue;
+	}
+
+	public void setTokensNameValue(TokensNameValue tokensNameValue) {
+		this.tokensNameValue = tokensNameValue;
+	}
+
+	public HopperType getHopperType() {
+		return hopperType;
+	}
+
+	public void setHopperType(HopperType hopperType) {
+		this.hopperType = hopperType;
+	}
+
+	/*public double getValue() {
 		return value;
 	}
 
@@ -64,6 +86,6 @@ public class CountryTokensValue implements Serializable{
 
 	public void setCountry(Country country) {
 		this.country = country;
-	}
+	}*/
 
 }

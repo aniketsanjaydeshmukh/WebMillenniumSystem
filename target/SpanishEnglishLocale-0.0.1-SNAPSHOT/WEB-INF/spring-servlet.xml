@@ -104,6 +104,14 @@
 				<value>com.spanish.english.form.CountryCoinsValue</value>
 				<value>com.spanish.english.form.CountryTokensValue</value>
 				<value>com.spanish.english.form.CountryBillsValue</value>
+				<value>com.spanish.english.form.CountryNotesValue</value>
+				<value>com.spanish.english.form.TokensName</value>
+				<value>com.spanish.english.form.BillsName</value>
+				<value>com.spanish.english.form.CoinsName</value>
+				<value>com.spanish.english.form.NotesName</value>
+				<value>com.spanish.english.form.TokensNameValue</value>
+				<value>com.spanish.english.form.BillsNameValue</value>
+				
 				
 			</list>
 		</property>

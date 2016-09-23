@@ -30,8 +30,8 @@ public class BillsType implements Serializable{
 	@Column(name = "id")
 	private long id;
 
-	@ManyToOne  
-	BillValidatorType billValidatorType;
+	/*@ManyToOne  
+	BillValidatorType billValidatorType;*/
 	
 	@OneToMany(fetch = FetchType.EAGER,targetEntity=BillsValue.class,cascade=CascadeType.ALL, mappedBy="billsType")  
 	private Set<BillsValue> billsValue;
@@ -44,13 +44,13 @@ public class BillsType implements Serializable{
 		this.id = id;
 	}
 
-	public BillValidatorType getBillValidatorType() {
+	/*public BillValidatorType getBillValidatorType() {
 		return billValidatorType;
 	}
 
 	public void setBillValidatorType(BillValidatorType billValidatorType) {
 		this.billValidatorType = billValidatorType;
-	}
+	}*/
 
 	public Set<BillsValue> getBillsValue() {
 		return billsValue;

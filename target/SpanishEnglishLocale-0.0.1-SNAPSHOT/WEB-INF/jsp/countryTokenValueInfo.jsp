@@ -22,12 +22,12 @@
 		<input type="hidden" value="${tokenValue.id}" id="tokenValueID" name="tokenValueID">
 		<input type="hidden" value="${ttid}" id="tokenTypeID" name="tokenTypeID">
 		<div class="form-group">
-       <label name="machineNumber" class="col-sm-3 control-label">Enter values for ${tokenValue.value} &#42;</label>
+       <label name="machineNumber" class="col-sm-3 control-label">Enter values for Token ${tokenValue.value} &#42;</label>
        		<div class="col-sm-8">
 	       <c:forEach var="country" items="${countryList}">
-	       		  <input type="hidden"  value="${country.id}" id="countryValuesID" name="countryValuesID" class="form-control"/>${country.country}
+	       		  <input type="hidden"  value="${country.id}" id="countryValuesID" name="countryValuesID" class="form-control"/>${country.country}  (in ${country.currency} )
 	       		  <input type="text"  value="" id="countryValues" name="countryValues" class="form-control"/>
-	       		  (in ${country.currency} )
+	       		  
 	       </c:forEach>
 	       
 	       <button type="submit" name="submitButton" class="btn btn-primary">Next</button>

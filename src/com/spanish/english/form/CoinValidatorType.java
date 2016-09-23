@@ -35,8 +35,13 @@ public class CoinValidatorType implements Serializable{
 	@ManyToOne  
 	private MachineType machineType;
 	
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=CoinsType.class,cascade=CascadeType.ALL, mappedBy="coinValidatorType")  
-	private Set<CoinsType> coinsType;
+	/*@OneToMany(fetch = FetchType.EAGER,targetEntity=CoinsType.class,cascade=CascadeType.ALL, mappedBy="coinValidatorType")  
+	private Set<CoinsType> coinsType;*/
+	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryCoinsValue.class,cascade=CascadeType.ALL, mappedBy="coinValidatorType")  
+	private Set<CountryCoinsValue> countryCoinsValue;
+	
+	
 	public long getId() {
 		return id;
 	}
@@ -61,12 +66,20 @@ public class CoinValidatorType implements Serializable{
 		this.machineType = machineType;
 	}
 
-	public Set<CoinsType> getCoinsType() {
+	/*public Set<CoinsType> getCoinsType() {
 		return coinsType;
 	}
 
 	public void setCoinsType(Set<CoinsType> coinsType) {
 		this.coinsType = coinsType;
+	}*/
+
+	public Set<CountryCoinsValue> getCountryCoinsValue() {
+		return countryCoinsValue;
+	}
+
+	public void setCountryCoinsValue(Set<CountryCoinsValue> countryCoinsValue) {
+		this.countryCoinsValue = countryCoinsValue;
 	}
 
 }

@@ -37,4 +37,9 @@ public class CountryServicesImpl implements CountryServices{
 		return countryDao.deleteCountry(Id);
 	}
 
+	@Override
+	public Country getLastCountry() {
+		return countryDao.getLastCountry();
+	}
+
 }

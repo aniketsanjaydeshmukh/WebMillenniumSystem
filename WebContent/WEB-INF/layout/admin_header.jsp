@@ -6,6 +6,8 @@
 	<li id="reportActive" ><a href="${pageContext.request.contextPath}/admin/machine.html"><spring:message code="label.machine"/></a></li>
 	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/country.html"><spring:message code="label.country"/></a></li>
 	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/machineType.html"><spring:message code="label.machineType"/></a></li>
+	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/tokens.html"><spring:message code="label.token"/></a></li>
+	<li id="settingActive" ><a href="${pageContext.request.contextPath}/admin/bills.html"><spring:message code="label.bill"/></a></li>
 </ul>
 
 

@@ -9,4 +9,5 @@ public interface CountryServices {
 	Set<Country> getCountryList();
 	Country getCountryById(long id);
 	boolean deleteCountry(long Id);
+	Country getLastCountry();
 }

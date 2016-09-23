@@ -37,8 +37,8 @@ public class BillsValue implements Serializable{
 	@ManyToOne
 	BillsType billsType;
 
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryBillsValue.class,cascade=CascadeType.ALL, mappedBy="billsValue")  
-	private Set<CountryBillsValue> countryBillsValue;
+	/*@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryBillsValue.class,cascade=CascadeType.ALL, mappedBy="billsValue")  
+	private Set<CountryBillsValue> countryBillsValue;*/
 	
 	public long getId() {
 		return id;
@@ -64,13 +64,13 @@ public class BillsValue implements Serializable{
 		this.billsType = billsType;
 	}
 
-	public Set<CountryBillsValue> getCountryBillsValue() {
+	/*public Set<CountryBillsValue> getCountryBillsValue() {
 		return countryBillsValue;
 	}
 
 	public void setCountryBillsValue(Set<CountryBillsValue> countryBillsValue) {
 		this.countryBillsValue = countryBillsValue;
-	}
+	}*/
 
 	public boolean isDone() {
 		return isDone;

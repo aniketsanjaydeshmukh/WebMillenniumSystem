@@ -26,13 +26,18 @@ public class CountryCoinsValue implements Serializable{
 	@Column(name = "id")
 	private long id;
 	
-	private double value;
 	
 	@ManyToOne
-	CoinsValue coinsValue;
+	CoinsName coinsName;
 	
 	@ManyToOne
-	Country country;
+	HopperType hopperType;
+	
+	@ManyToOne
+	CoinValidatorType coinValidatorType;
+	
+	/*@ManyToOne
+	Country country;*/
 
 	public long getId() {
 		return id;
@@ -42,29 +47,47 @@ public class CountryCoinsValue implements Serializable{
 		this.id = id;
 	}
 
-	public double getValue() {
+	/*public double getValue() {
 		return value;
 	}
 
 	public void setValue(double value) {
 		this.value = value;
 	}
-
-	public CoinsValue getCoinsValue() {
-		return coinsValue;
+*/
+	public CoinsName getCoinsName() {
+		return coinsName;
 	}
 
-	public void setCoinsValue(CoinsValue coinsValue) {
-		this.coinsValue = coinsValue;
+	public void setCoinsName(CoinsName coinsName) {
+		this.coinsName = coinsName;
 	}
 
-	public Country getCountry() {
+	public HopperType getHopperType() {
+		return hopperType;
+	}
+
+	public void setHopperType(HopperType hopperType) {
+		this.hopperType = hopperType;
+	}
+
+	public CoinValidatorType getCoinValidatorType() {
+		return coinValidatorType;
+	}
+
+	public void setCoinValidatorType(CoinValidatorType coinValidatorType) {
+		this.coinValidatorType = coinValidatorType;
+	}
+
+	
+
+	/*public Country getCountry() {
 		return country;
 	}
 
 	public void setCountry(Country country) {
 		this.country = country;
-	}
+	}*/
 	
 
 }

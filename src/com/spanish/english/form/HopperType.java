@@ -35,11 +35,22 @@ public class HopperType implements Serializable{
 	@ManyToOne  
 	private MachineType machineType;
 	
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=CoinsType.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
+	private boolean singleCoin;
+	
+	/*@OneToMany(fetch = FetchType.EAGER,targetEntity=CoinsType.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
 	private Set<CoinsType> coinsType;
 	
 	@OneToMany(fetch = FetchType.EAGER,targetEntity=TokensType.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
-	private Set<TokensType> tokensType;
+	private Set<TokensType> tokensType;*/
+	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryCoinsValue.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
+	private Set<CountryCoinsValue> countryCoinsValue;
+	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryNotesValue.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
+	private Set<CountryNotesValue> countryNotesValue;
+	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryTokensValue.class,cascade=CascadeType.ALL, mappedBy="hopperType")  
+	private Set<CountryTokensValue> countryTokensValue;
 	
 	public long getId() {
 		return id;
@@ -65,7 +76,39 @@ public class HopperType implements Serializable{
 		this.machineType = machineType;
 	}
 
-	public Set<CoinsType> getCoinsType() {
+	public boolean isSingleCoin() {
+		return singleCoin;
+	}
+
+	public void setSingleCoin(boolean singleCoin) {
+		this.singleCoin = singleCoin;
+	}
+
+	public Set<CountryCoinsValue> getCountryCoinsValue() {
+		return countryCoinsValue;
+	}
+
+	public void setCountryCoinsValue(Set<CountryCoinsValue> countryCoinsValue) {
+		this.countryCoinsValue = countryCoinsValue;
+	}
+
+	public Set<CountryTokensValue> getCountryTokensValue() {
+		return countryTokensValue;
+	}
+
+	public void setCountryTokensValue(Set<CountryTokensValue> countryTokensValue) {
+		this.countryTokensValue = countryTokensValue;
+	}
+
+	public Set<CountryNotesValue> getCountryNotesValue() {
+		return countryNotesValue;
+	}
+
+	public void setCountryNotesValue(Set<CountryNotesValue> countryNotesValue) {
+		this.countryNotesValue = countryNotesValue;
+	}
+
+	/*public Set<CoinsType> getCoinsType() {
 		return coinsType;
 	}
 
@@ -79,5 +122,5 @@ public class HopperType implements Serializable{
 
 	public void setTokensType(Set<TokensType> tokensType) {
 		this.tokensType = tokensType;
-	}
+	}*/
 }

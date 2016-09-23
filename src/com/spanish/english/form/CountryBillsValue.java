@@ -26,13 +26,19 @@ public class CountryBillsValue implements Serializable{
 	@Column(name = "id")
 	private long id;
 	
-	private double value;
+	/*private double value;
 	
 	@ManyToOne
 	private BillsValue billsValue;
 	
 	@ManyToOne
-	Country country;
+	Country country;*/
+	
+	@ManyToOne
+	BillsNameValue billsNameValue;
+	
+	@ManyToOne
+	BillValidatorType billValidatorType;
 
 	public long getId() {
 		return id;
@@ -42,7 +48,23 @@ public class CountryBillsValue implements Serializable{
 		this.id = id;
 	}
 
-	public double getValue() {
+	public BillsNameValue getBillsNameValue() {
+		return billsNameValue;
+	}
+
+	public void setBillsNameValue(BillsNameValue billsNameValue) {
+		this.billsNameValue = billsNameValue;
+	}
+
+	public BillValidatorType getBillValidatorType() {
+		return billValidatorType;
+	}
+
+	public void setBillValidatorType(BillValidatorType billValidatorType) {
+		this.billValidatorType = billValidatorType;
+	}
+
+	/*public double getValue() {
 		return value;
 	}
 
@@ -65,5 +87,5 @@ public class CountryBillsValue implements Serializable{
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-
+*/
 }

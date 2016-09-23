@@ -32,11 +32,16 @@ public class BillValidatorType implements Serializable{
 	
 	private long capacity;
 	
+	private boolean onlyInput;
+	
 	@ManyToOne  
 	private MachineType machineType;
 
-	@OneToMany(fetch = FetchType.EAGER,targetEntity=BillsType.class,cascade=CascadeType.ALL, mappedBy="billValidatorType")  
-	private Set<BillsType> billsType;
+	/*@OneToMany(fetch = FetchType.EAGER,targetEntity=BillsType.class,cascade=CascadeType.ALL, mappedBy="billValidatorType")  
+	private Set<BillsType> billsType;*/
+	
+	@OneToMany(fetch = FetchType.EAGER,targetEntity=CountryBillsValue.class,cascade=CascadeType.ALL, mappedBy="billValidatorType")  
+	private Set<CountryBillsValue> countryBillsValue;
 	
 	public long getId() {
 		return id;
@@ -62,12 +67,20 @@ public class BillValidatorType implements Serializable{
 		this.machineType = machineType;
 	}
 
-	public Set<BillsType> getBillsType() {
+	public boolean isOnlyInput() {
+		return onlyInput;
+	}
+
+	public void setOnlyInput(boolean onlyInput) {
+		this.onlyInput = onlyInput;
+	}
+
+	/*public Set<BillsType> getBillsType() {
 		return billsType;
 	}
 
 	public void setBillsType(Set<BillsType> billsType) {
 		this.billsType = billsType;
-	}
+	}*/
 
 }

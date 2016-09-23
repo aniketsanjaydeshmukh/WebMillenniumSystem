@@ -46,6 +46,25 @@
                     </div>
                 </a>
             </div>
+            
+            <div class="col-md-2 col-sm-3">
+            	<a a href="${pageContext.request.contextPath}/admin/tokens.html" class="menu-link">
+                    <div class="menu-block m-block3">
+                        <div class="menu-icon"><i class="fa fa-user"></i></div>
+                        <div class="menu-name"><spring:message code="label.token"/></div>
+                    </div>
+                </a>
+            </div> 
+            
+            <div class="col-md-2 col-sm-3">
+            	<a a href="${pageContext.request.contextPath}/admin/bills.html" class="menu-link">
+                    <div class="menu-block m-block3">
+                        <div class="menu-icon"><i class="fa fa-user"></i></div>
+                        <div class="menu-name"><spring:message code="label.bill"/></div>
+                    </div>
+                </a>
+            </div> 
+            
         </div>
     </div>
 </div>
